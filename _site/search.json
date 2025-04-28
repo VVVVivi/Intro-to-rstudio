@@ -1,0 +1,105 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introduction to RStudio for Public Health",
+    "section": "",
+    "text": "R is one of the leading programming languages in Data Science and Public Health Research. It is widely used to perform statistics, machine learning, visualizations, and data analyses. It is an open-source programming language, meaning all the software we will use in the course is free.\nThis course is designed as an introduction to R and RStudio for participants with no prior programming experience. We will start from scratch by introducing how to start programming in R, read and write data, manipulate data, and visualize data by creating different plots — covering all the fundamental tasks needed to begin analyzing your own data.\nWe will use RStudio, a powerful and user-friendly interface that makes developing R code much easier. During the course, we will also introduce you to the tidyverse, a collection of essential R packages including dplyr and ggplot2 that simplify data manipulation and visualization.",
+    "crumbs": [
+      "Home",
+      "Description",
+      "Introduction to RStudio for Public Health"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html#if-you-already-have-r-and-rstudio-installed",
+    "href": "index.html#if-you-already-have-r-and-rstudio-installed",
+    "title": "Introduction to RStudio for Public Health",
+    "section": "If you already have R and RStudio installed",
+    "text": "If you already have R and RStudio installed\n\nOpen RStudio, click Help &gt; Check for Updates. Update if necessary.\nTo check your R version, start RStudio and type sessionInfo().\nYou can also check the latest version on the CRAN website and RStudio download page.",
+    "crumbs": [
+      "Home",
+      "Description",
+      "Introduction to RStudio for Public Health"
+    ]
+  },
+  {
+    "objectID": "index.html#if-you-dont-have-r-and-rstudio-installed",
+    "href": "index.html#if-you-dont-have-r-and-rstudio-installed",
+    "title": "Introduction to RStudio for Public Health",
+    "section": "If you don’t have R and RStudio installed",
+    "text": "If you don’t have R and RStudio installed\n\nDownload R from CRAN.\nInstall the downloaded .exe file.\nDownload RStudio from the RStudio download page.\nChoose RStudio x.yy.zzz - Windows Vista/7/8/10.\nInstall RStudio and open it to check it runs correctly.",
+    "crumbs": [
+      "Home",
+      "Description",
+      "Introduction to RStudio for Public Health"
+    ]
+  },
+  {
+    "objectID": "index.html#if-you-already-have-r-and-rstudio-installed-1",
+    "href": "index.html#if-you-already-have-r-and-rstudio-installed-1",
+    "title": "Introduction to RStudio for Public Health",
+    "section": "If you already have R and RStudio installed",
+    "text": "If you already have R and RStudio installed\n\nOpen RStudio, click Help &gt; Check for Updates.\nStart RStudio and type sessionInfo() to check your R version.\nVerify your version against CRAN.",
+    "crumbs": [
+      "Home",
+      "Description",
+      "Introduction to RStudio for Public Health"
+    ]
+  },
+  {
+    "objectID": "index.html#if-you-dont-have-r-and-rstudio-installed-1",
+    "href": "index.html#if-you-dont-have-r-and-rstudio-installed-1",
+    "title": "Introduction to RStudio for Public Health",
+    "section": "If you don’t have R and RStudio installed",
+    "text": "If you don’t have R and RStudio installed\n\nDownload R from CRAN.\nInstall the .pkg file.\nInstall XQuartz if prompted.\nDownload RStudio from the RStudio download page.\nChoose RStudio x.yy.zzz - Mac OS X 10.6+ (64-bit).\nInstall and test RStudio.",
+    "crumbs": [
+      "Home",
+      "Description",
+      "Introduction to RStudio for Public Health"
+    ]
+  },
+  {
+    "objectID": "index.html#windows",
+    "href": "index.html#windows",
+    "title": "Introduction to RStudio for Public Health",
+    "section": "Windows",
+    "text": "Windows\n\nIf you already have R and RStudio installed\n\nOpen RStudio, click Help &gt; Check for Updates. Update if necessary.\nTo check your R version, start RStudio and type sessionInfo().\nYou can also check the latest version on the CRAN website and RStudio download page.\n\n\n\nIf you don’t have R and RStudio installed\n\nDownload R from CRAN.\nInstall the downloaded .exe file.\nDownload RStudio from the RStudio download page.\nChoose RStudio x.yy.zzz - Windows Vista/7/8/10.\nInstall RStudio and open it to check it runs correctly.",
+    "crumbs": [
+      "Home",
+      "Description",
+      "Introduction to RStudio for Public Health"
+    ]
+  },
+  {
+    "objectID": "index.html#macos",
+    "href": "index.html#macos",
+    "title": "Introduction to RStudio for Public Health",
+    "section": "macOS",
+    "text": "macOS\n\nIf you already have R and RStudio installed\n\nOpen RStudio, click Help &gt; Check for Updates.\nStart RStudio and type sessionInfo() to check your R version.\nVerify your version against CRAN.\n\n\n\nIf you don’t have R and RStudio installed\n\nDownload R from CRAN.\nInstall the .pkg file.\nInstall XQuartz if prompted.\nDownload RStudio from the RStudio download page.\nChoose RStudio x.yy.zzz - Mac OS X 10.6+ (64-bit).\nInstall and test RStudio.",
+    "crumbs": [
+      "Home",
+      "Description",
+      "Introduction to RStudio for Public Health"
+    ]
+  },
+  {
+    "objectID": "index.html#linux",
+    "href": "index.html#linux",
+    "title": "Introduction to RStudio for Public Health",
+    "section": "Linux",
+    "text": "Linux\n\nFollow Linux distribution instructions from CRAN.\nFor Ubuntu/Debian: Install R via sudo apt-get install r-base.\nDownload RStudio from the RStudio download page.\nInstall using: sudo dpkg -i rstudio-x.yy.zzz-amd64.deb.\nOpen RStudio to verify it works.\n\nAdditionally, you will need to install the ggplot2 package. Details are provided in the setup section.",
+    "crumbs": [
+      "Home",
+      "Description",
+      "Introduction to RStudio for Public Health"
+    ]
+  }
+]

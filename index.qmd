@@ -1,0 +1,105 @@
+---
+title: "Introduction to RStudio for Public Health"
+author: Haowei(Vivi) Wang
+institute: Department of Infectious Disease Epidemiology, Imperial College London
+format:
+  html:
+    toc: true
+    toc-location: left
+---
+
+# Overview
+
+**R** is one of the leading programming languages in **Data Science** and **Public Health Research**. It is widely used to perform statistics, machine learning, visualizations, and data analyses. It is an open-source programming language, meaning **all the software we will use in the course is free**.
+
+This course is designed as an **introduction to R and RStudio for participants with no prior programming experience**. We will start from scratch by introducing how to start programming in R, read and write data, manipulate data, and visualize data by creating different plots — covering all the fundamental tasks needed to begin analyzing your own data.
+
+We will use **RStudio**, a powerful and user-friendly interface that makes developing R code much easier. During the course, we will also introduce you to the **tidyverse**, a collection of essential R packages including **dplyr** and **ggplot2** that simplify data manipulation and visualization.
+
+# Target Audience
+
+This course is designed for participants:
+
+\- With little or no previous experience in R or programming.
+
+\- Working or studying in public health, epidemiology, infectious disease research, or related fields.
+
+\- Interested in gaining practical skills for data analysis and modeling.
+
+# Sessions
+
+The course will cover the following sessions:
+
+1\. **Getting started**: Installing R and RStudio, understanding the RStudio environment.
+
+2\. **Introduction to R programming**: Basic operations, data types, writing scripts.
+
+3\. **Starting with data**: Reading, exploring, and saving datasets.
+
+4\. **Data visualization with ggplot2**: Using `ggplot2` for creating publication-quality figures.
+
+# Data
+
+We will work with example datasets commonly used in public health, such as synthetic outbreak data and demographic datasets.\
+All data will be downloaded directly from within R during the sessions.
+
+# Setup Instructions
+
+All the software required to run this course should be installed on your machine. Please ensure that **R** and **RStudio** are installed on your computer before the workshop.
+
+**R** and **RStudio** are separate downloads and installations:
+
+\- R is the core statistical computing environment.
+
+\- RStudio is a user-friendly interface for R.
+
+Instructions are available for: - [Windows](#windows) - [macOS](#macos) - [Linux](#linux). Please follow the appropriate section for your operating system.
+
+## Windows
+
+### If you already have R and RStudio installed
+
+-   Open RStudio, click `Help > Check for Updates`. Update if necessary.
+-   To check your R version, start RStudio and type `sessionInfo()`.
+-   You can also check the latest version on the [CRAN website](https://cran.r-project.org/) and [RStudio download page](https://posit.co/download/rstudio-desktop/).
+
+### If you don't have R and RStudio installed
+
+-   Download R from [CRAN](https://cran.r-project.org/).
+-   Install the downloaded `.exe` file.
+-   Download RStudio from the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+-   Choose **RStudio x.yy.zzz - Windows Vista/7/8/10**.
+-   Install RStudio and open it to check it runs correctly.
+
+## macOS
+
+### If you already have R and RStudio installed
+
+-   Open RStudio, click `Help > Check for Updates`.
+-   Start RStudio and type `sessionInfo()` to check your R version.
+-   Verify your version against [CRAN](https://cran.r-project.org/).
+
+### If you don't have R and RStudio installed
+
+-   Download R from [CRAN](https://cran.r-project.org/).
+-   Install the `.pkg` file.
+-   Install [XQuartz](https://www.xquartz.org/) if prompted.
+-   Download RStudio from the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+-   Choose **RStudio x.yy.zzz - Mac OS X 10.6+ (64-bit)**.
+-   Install and test RStudio.
+
+## Linux
+
+-   Follow Linux distribution instructions from [CRAN](https://cran.r-project.org/).
+-   For Ubuntu/Debian: Install R via `sudo apt-get install r-base`.
+-   Download RStudio from the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+-   Install using: `sudo dpkg -i rstudio-x.yy.zzz-amd64.deb`.
+-   Open RStudio to verify it works.
+
+Additionally, you will need to install the **ggplot2** package. Details are provided in the setup section.
+
+# Contributors
+
+This material has been created and adapted by Haowei Wang based on resources from [Cambio Training](https://cambiotraining.github.io/intro-r/index.html) and other public health training materials.
+
+------------------------------------------------------------------------

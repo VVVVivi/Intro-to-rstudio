@@ -1,0 +1,37 @@
+project:
+  type: website
+
+website:
+  title: "Introduction to RStudio for Infectious Disease Modelling"
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: Getting Started
+        href: getting_started.qmd
+      - text: Introduction to R
+        href: intro_to_r.qmd
+      - text: Visualization
+        href: visualization.qmd
+  sidebar:
+    style: "floating"
+    search: true
+    contents:
+      - section: "Description"
+        contents:
+          - index.qmd
+      - section: "Setup Instructions"
+        contents:
+          - getting-started.qmd
+          - intro-to-r.qmd
+          - visualization.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-location: left
+
+editor: visual
+
