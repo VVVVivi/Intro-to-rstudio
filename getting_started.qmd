@@ -1,3 +1,29 @@
 ---
 title: "Getting Started"
+format:
+  html:
+    toc: true
+    toc-location: left
 ---
+
+# What is R?
+
+![](https://www.r-project.org/Rlogo.png){width="60" height="47"}
+
+**R** is a free software environment for statistical computing, data visualization, and data analysis. It is widely used in academic research, public health, and industry. It allows you to work with data and create plots, statistical models, and even simulations.
+
+# What is RStudio?
+
+![](images/clipboard-2534404882.png){width="60"}
+
+**RStudio** is a free, open-source integrated development environment (IDE) for R. It makes using R much easier through its graphical interface, script editor, file manager, plotting window, and more.
+
+RStudio helps you: - Write and run R code - View plots and results - Manage projects and data files
+
+# Why R and RStudio?
+
+-   **Free and open-source**
+-   Widely used in **public health** and **epidemiology**
+-   Supported by a large, active community
+-   Cross-platform (Windows, macOS, Linux)
+-   Powerful for **data analysis, visualization, and modelling**
