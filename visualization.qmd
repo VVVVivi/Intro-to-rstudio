@@ -1,0 +1,100 @@
+---
+title: " Visualization with ggplot2"
+format:
+  html:
+    toc: true
+    toc-location: left
+editor: visual
+---
+
+# Introduction to ggplot2
+
+Hadley Wickham's **ggplot2** package is a powerful extension to R for creating graphics. It implements a "grammar of graphics," which breaks the task of plotting into several manageable steps. For standard plots, you usually only need three main steps:
+
+1.  Input your data using `ggplot()`,
+2.  Call a `geom_xxx()` function to specify the type of plot (e.g., scatter, line, boxplot),
+3.  Optionally adjust scales, legends, themes, etc.
+
+If you want more control over the appearance of your plot, you can add layers such as `scale`, legends, or color options. You can start simple and progressively refine your plots.
+
+1.  Compared to R's base graphics system, `ggplot2` produces more consistent and aesthetically pleasing outputs. It is particularly good when you need to combine different types of graphics or design custom visualizations.
+
+The typical steps for building a plot with ggplot2 are:
+
+1.  Prepare your data, typically in a data frame with each row as an observation and each column as a variable.
+2.  Use `ggplot()` to specify your data and aesthetics.
+3.  Add a geometric object using `geom_xxx()` to define the type of plot.
+4.  Optionally refine with:
+    -   Coordinate systems (e.g., `coord_cartesian()`, `scale_x_log10()`),
+    -   Scales and themes,
+    -   Titles and labels via `labs()`.
+
+A general formula to build a ggplot2 figure might look like this:
+
+```{r}
+#| eval: false
+p <- ggplot(data = <data_frame>, 
+            mapping = aes(x = <var_x>, y = <var_y>, ...)) +
+  geom_<geom_type>(...) +
+  scale_<scale_type>(...) +
+  coord_<coord_type>(...) +
+  labs(...)
+```
+
+-   `<...>` indicates optional parameters.
+-   The variable `p` stores all the data and settings for the plot and can be named arbitrarily.
+-   Variable names like `<data_frame>` and `<var_x>` are placeholders you would replace with real column or data names.
+
+## References and Further Reading 
+
+This chapter draws from the following key sources:
+
+-   **Healy, Kieran (2018). *Data Visualization: A Practical Introduction*. Princeton University Press.**\
+    <https://socviz.co/index.html>\
+    This book explains the use of ggplot in R and also covers some general principles of data visualization.
+
+-   **Claus O. Wilke (2019). *Fundamentals of Data Visualization*. O’Reilly Media.**\
+    <https://serialmentor.com/dataviz>\
+    This book also uses R's ggplot2 package, but the main text does not include code. It primarily discusses considerations when choosing chart types and how to combine different plot elements. Code is available for download on GitHub.
+
+-   **Winston Chang (2018). *R Graphics Cookbook*. O’Reilly Media.**\
+    Website: <https://r-graphics.org>\
+    This is the second edition, which discusses various types of R plots.
+
+-   **Wickham, Hadley (2016). *ggplot2: Elegant Graphics for Data Analysis*. New York: Springer.**
+
+-   **RStudio’s ggplot2 overview:**\
+    <https://ggplot2.tidyverse.org/articles/ggplot2-specs.html>
+
+## Datasets Used in Later Examples
+
+The following datasets will be used in the upcoming examples:
+
+-   The **gapminder** dataset from the `gapminder` package contains data across different years for dozens of countries, including continent, life expectancy, population, and per capita GDP. It includes 1704 observations and 6 variables.
+
+-   The `gss_sm` dataset from the `socviz` package includes part of the General Social Survey (GSS) data from the United States in 2016. It has 2867 observations and 32 variables. The variables mainly represent categorical attributes in social surveys, such as binary classification, ordinal classification, grouped numeric values, and integer values.
+
+-   The `organdata` dataset from the `socviz` package contains official statistics and related records of organ donation across 17 OECD countries over different years.
+
+-   The `elections_historic` dataset from the `socviz` package includes historical U.S. presidential election results. It includes information such as the candidates, party affiliations, and support percentages.
+
+-   The `asasec` dataset from the `socviz` package includes data from the American Sociological Association (ASA) annual membership surveys from 2005 to 2015.
+
+-   The `midwest` dataset from the `ggplot2` package contains statistical data on counties in the Midwestern United States, such as land area.
+
+-   The `diamonds` dataset from the `ggplot2` package.
+
+------------------------------------------------------------------------
+
+`gapminder` dataset:
+
+```{r}
+library(gapminder)
+head(gapminder, 20)
+```
+
+`gss_sm` dataset:
+
+```{r}
+head(gss_sm, 20)
+```
