@@ -1,0 +1,423 @@
+---
+title: "Introduction to R Programming"
+format:
+  html:
+    toc: true
+    toc-location: left
+---
+
+## Creating objects in R
+
+You can get output from R simply by typing math in the console:
+
+```{r}
+1 + 1 # addition
+2 - 1 # deduction
+12 / 7 # division
+2 * 2 # multiplication
+2 ^ 2 # square 
+```
+
+However, to do useful and interesting things, we need to assign *values* to *objects*. To create an object, we need to give it a name followed by the assignment operator `<-`, and the value we want to give it:
+
+```{r}
+weight_kg <- 55
+```
+
+`<-` is the assignment operator. It assigns values on the right to objects on the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can be read as 3 **goes into** `x`.
+
+For historical reasons, you can also use `=` for assignments, but not in every context. Because of the [slight](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html) [differences](http://r.789695.n4.nabble.com/Is-there-any-difference-between-and-tp878594p878598.html) in syntax, it is good practice to always use `<-` for assignments.
+
+In RStudio, typing `Alt + -` (push Alt at the same time as the - key) will write `<-` in a single keystroke on a PC, while typing `Option + -` (Option and - key) does the same in a Mac.
+
+Objects can be named like `x`, `current_temperature`, or `subject_id`.
+
+-   Be explicit and not too long
+
+-   Not start with a number (e.g., `2x` is invalid, but `x2` is)
+
+-   Be case-sensitive (e.g., `weight_kg` ≠ `Weight_kg`)
+
+-   Avoid using names of built-in functions like `c`, `T`, `mean`, `data`, or `if` (see [here](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html) for a complete list). If in doubt, check the help to see if the name is already in use. It’s also best to avoid dots (`.`) within an object name as in `my.dataset`. Instead, use underscores (`_`).
+
+-   It is also recommended to use nouns for object names, and verbs for function names.
+
+-   To improve readability, use consistent naming conventions. CIn R, three popular style guides are [Google’s](#0), [Jean Fan’s](#0) and the [tidyverse’s](#0).
+
+-   You can install the `lintr` package to catch issues in your code style.
+
+### **Objects vs. Variables**
+
+What are known as `objects` in `R` are known as `variables` in many other programming languages. Depending on the context, `object` and `variable` can have drastically different meanings. However, in this lesson, the two words are used synonymously. For more information see: <https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects>
+
+When assigning a value to an object, R does not print anything. You can force R to print the value by using parentheses or by typing the object name:
+
+```{r}
+weight_kg <- 55    # doesn't print anything
+(weight_kg <- 55)  # but putting parenthesis around the call prints the value of `weight_kg`
+weight_kg          # and so does typing the name of the object
+```
+
+Now that R has`weight_kg` in memory, we can do arithmetic with it. For instance, we may want to convert this weight into pounds (weight in pounds is 2.2 times the weight in kg):
+
+```{r}
+2.2 * weight_kg
+```
+
+We can also change an object’s value by assigning it a new one:
+
+```{r}
+weight_kg <- 57.5
+2.2 * weight_kg
+```
+
+This means that assigning a value to one object does not change the values of other objects For example, let’s store the animal’s weight in pounds in a new object, `weight_lb`:
+
+```{r}
+weight_lb <- 2.2 * weight_kg
+```
+
+and then change `weight_kg` to 100.
+
+```{r}
+weight_kg <- 100
+```
+
+What do you think is the current content of the object `weight_lb`? 126.5 or 220?
+
+### **Comments**
+
+The comment character in R is `#`, anything to the right of a `#` in a script will be ignored by R. It is useful to leave notes and explanations in your scripts. RStudio makes it easy to comment or uncomment a paragraph: after selecting the lines you want to comment, press at the same time on your keyboard `Ctrl` + `Shift` + `C`. If you only want to comment out one line, you can put the cursor at any location of that line (i.e. no need to select the whole line), then press `Ctrl` + `Shift` + `C`.
+
+### Exercise
+
+What are the values after each statement in the following?
+
+```{r}
+mass <- 47.5      # mass?
+age <- 122        # age?
+mass <- mass * 2.0  # mass?
+age <- age - 20     # age?
+mass_index <- mass / age  # mass_index
+```
+
+::: {.callout-note collapse="true" title="Answer"}
+```{r}
+mass <- 47.5         # mass is 47.5
+age <- 122           # age is 122
+mass <- mass * 2.0   # mass is 95
+age <- age - 20      # age is 102
+mass_index <- mass / age  # mass_index is 0.931
+```
+:::
+
+### Functions and their arguments
+
+Functions are “canned scripts” that automate more complicated sets of commands including operations, assignments, etc. Many functions are predefined, or can be made available by importing R *packages*.
+
+A function usually takes one or more inputs called *arguments*. Functions often return a *value*.
+
+A typical example would be the function `sqrt()`. The input must be a number, and the return is the square root of that number.
+
+Executing a function is called *calling* the function.
+
+An example of a function call is:
+
+```{r}
+b <- sqrt(4)
+```
+
+Here, the value of `4` is given to `sqrt()`, which returns the square root of `a`, and the result is assigned to `b`.
+
+The return value of a function can also be a set, list, or dataset—not just a single number.
+
+Arguments can be anything: numbers, filenames, or objects. Some functions take *optional arguments* (called *options*), which take on *default values* if left out.
+
+Let’s try a function that can take multiple arguments: `round()`.
+
+```{r}
+round(3.14159)
+```
+
+We’ve called `round()` with just one argument and it rounded to the value `3`. That's because the default is to round to the nearest whole number. If we want to more digits we can see how to do that by getting information about the `round` function. We can use `args(round)` to find what arguments it takes, or look at the help for this function using `round`.
+
+If we want to know what arguments it takes:
+
+```{r}
+args(round)
+```
+
+```{r}
+?round
+```
+
+To round to a specific number of digits:
+
+```{r}
+round(3.14159, digits = 2)
+```
+
+If you provide the arguments in the exact same order as they are defined you don’t have to name them:
+
+```{r}
+round(3.14159, 2)
+```
+
+If we do name the arguments, we can switch their order:
+
+```{r}
+round(digits = 2, x = 3.14159)
+```
+
+It’s good practice to put the non-optional arguments (like the number you’re rounding) first in your function call, and to then specify the names of all optional arguments. If you don’t, someone reading your code might have to look up the definition of a function with unfamiliar arguments to understand what you’re doing.
+
+## **Vectors and data types**
+
+A **vector** is the most basic and common data type in R.
+
+A vector contains a sequence of values of the same type (e.g., numbers or characters). You can create one using `c()`.
+
+```{r}
+weight_g <- c(50, 60, 65, 82)
+weight_g
+```
+
+Vectors can also contain characters:
+
+```{r}
+animals <- c("cat","dog","rabbit")
+animals
+```
+
+Make sure to include quotes when defining character vectors, otherwise R will interpret them as objects have been created called `cat`, `dog`, and `rabbit`. As these objects don't exist in R's memory. there will be an error message.
+
+There are many functions that allow you to inspect the content of a vector.`length()` tells you how many elements are in a particular vector:
+
+```{r}
+length(weight_g)
+length(animals)
+```
+
+All elements of a vector must be of the same type. To check the type:
+
+```{r}
+class(weight_g)
+class(animals)
+```
+
+The function `str()`provides an overview of the structure of an object and its elements. It is a useful function when working with large and complex objects:
+
+```{r}
+str(weight_g)
+str(animals)
+```
+
+You can use the`c()`function to add other elements to your vector:
+
+```{r}
+weight_g <- c(weight_g, 90)     # add to the end
+weight_g <- c(30, weight_g)     # add to the beginning
+weight_g
+```
+
+In the first line, we take the original vector `weight_g`, add the value `90` to the end of it, and save the result back into `weight_g`. Then we add the value `30` to the beginning, again saving the result back into `weight_g`.
+
+This is useful for growing a dataset iteratively. We can do this over and over again to grow a vector, or assemble a dataset. As we program, this may be useful to add results that we are collecting or calculating.
+
+------------------------------------------------------------------------
+
+### Atomic vectors
+
+An **atomic vector** is the simplest R *data type*. R supports 6 atomic types:
+
+-   `"logical"`: for `TRUE` and `FALSE` (the boolean data type)
+-   `"integer"`: numbers like `2L`(e.g.,`2L`, the`L` indicates to R that it’s an integer)
+-   `"numeric"` (or`"double"`): floating-point numbers
+-   `"character"`: strings
+-   `"complex"`: complex numbers like `1 + 4i`to represent complex numbers with real and imaginary parts.
+-   `"raw"`: binary data (not covered here)
+
+Use `typeof()` to inspect:
+
+```{r}
+typeof(weight_g)
+typeof(animals)
+```
+
+### Challenge
+
+1.  Create a vector `height_mm` that contains the following heights of animals: 100, 150, 99, 87 in mm respectively.
+
+    ::: {.callout-note}
+    ```{r}
+    height_mm <- c(100, 150, 99, 87)
+    ```
+    :::
+
+```{=html}
+<!-- -->
+```
+2.  What is the total height of these animals in mm? (*Hint:* use function `sum`)
+
+    ::: {.callout-note}
+    ```{r}
+    sum(height_mm)
+    ```
+    :::
+
+```{=html}
+<!-- -->
+```
+3.  Another animal was measured and its height is 220 mm. Add this to the beginning of the vector `height_mm` and save the total height of the new set of animals in the `total_height` variable. What is the new `total_height`?
+
+    ::: {.callout-note}
+    ```{r}
+    height_mm <- c(220, height_mm)
+    total_height <- sum(height_mm)
+    ```
+    :::
+
+## Subsetting vectors
+
+If we want to extract one or several values from a vector, we must provide one or more indices in square brackets. For instance:
+
+```{r}
+animals <- c("mouse", "rat", "dog", "cat")
+animals[2]
+```
+
+```{r}
+animals[c(3, 2)]
+```
+
+We can also repeat the indices to create an object with more elements than the original one:
+
+```{r}
+more_animals <- animals[c(1, 2, 3, 2, 1, 4)]
+more_animals
+```
+
+R indices start at 1. Programming languages like Fortran, MATLAB, Julia, and R start counting at 1, because that’s what human beings typically do. Languages in the C family (including C++, Java, Perl, and Python) count from 0 because that’s simpler for computers to do.
+
+### **Conditional subsetting** 
+
+Another common way of subsetting is by using a logical vector. `TRUE` will select the element with the same index, while `FALSE` will not:
+
+```{r}
+weight_g <- c(21, 34, 39, 54, 55)
+weight_g[c(TRUE, FALSE, TRUE, TRUE, FALSE)]
+```
+
+These logical vectors are often created using logical tests. For example, to select only the values greater than 50:
+
+```{r}
+weight_g > 50    # will return logicals with TRUE for the indices that meet the condition
+```
+
+```{r}
+## so we can use this to select only the values above 50
+weight_g[weight_g > 50]
+```
+
+You can combine conditions using `&` (AND) or `|` (OR):
+
+```{r}
+weight_g[weight_g < 30 | weight_g > 50]
+```
+
+```{r}
+weight_g[weight_g >= 30 & weight_g == 21]
+```
+
+Note:
+
+-    `<` means less than
+
+-    `>` means greater than
+
+-    `>=` means greater than or equal to
+
+-    `==` means equal to
+
+The double equal sign `==` is a test for numerical equality between the left and right hand sides, and should not be confused with the single `=` sign, which performs variable assignment (similar to `<-`).
+
+A common task is to search for certain strings in a vector. One could use the “or” operator `|` to test for equality to multiple values, but this can quickly become tedious. The function `%in%` allows you to test if any of the elements of a search vector are found:
+
+```{r}
+animals <- c("mouse", "rat", "dog", "cat")
+animals[animals == "cat" | animals == "rat"]
+```
+
+However, this can get tedious. A better way is to use `%in%`:
+
+```{r}
+animals %in% c("rat", "cat", "dog", "duck", "goat")
+```
+
+```{r}
+animals[animals %in% c("rat", "cat", "dog", "duck", "goat")]
+```
+
+## Missing data
+
+As R was designed to analyze datasets, it includes the concept of missing data (which is uncommon in many other programming languages). Missing data are represented in vectors as `NA`.
+
+When doing operations on numbers, most functions will return `NA` if the data includes missing values. You can add the argument `na.rm = TRUE` to ignore them and only calculating based on values you have:
+
+```{r}
+heights <- c(2, 4, 4, NA, 6)
+mean(heights)
+max(heights)
+mean(heights, na.rm = TRUE)
+max(heights, na.rm = TRUE)
+```
+
+To handle missing values, become familiar with:
+
+-   `is.na()`
+-   `na.omit()`
+-   `complete.cases()`
+
+```{r}
+# Extract elements that are not missing
+heights[!is.na(heights)]
+
+# Remove incomplete (NA) cases. The returned object is an atomic vector of type "numeric" (or "double").
+na.omit(heights)
+
+# Use complete case. The returned object is an atomic vector of type "numeric" (or "double").
+heights[complete.cases(heights)]
+
+```
+
+Recall that you can use the `typeof()` function to inspect an object’s type.
+
+### Exercise 
+
+1.  Using this vector of heights in inches, create a new vector, `heights_no_na`, with the `NA`s removed.
+
+    ```{r}
+    heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72, 65, 64, 70, 63, 65)
+    ```
+
+2.  Use the function `median()` to calculate the median of the `heights` vector.
+
+3.  How many people in the set are taller than 67 inches?
+
+    ```{r}
+    heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72, 65, 64, 70, 63, 65)
+
+    # 1.
+    heights_no_na <- heights[!is.na(heights)] 
+    # or
+    heights_no_na <- na.omit(heights)
+    # or
+    heights_no_na <- heights[complete.cases(heights)]
+
+    # 2.
+    median(heights, na.rm = TRUE)
+
+    # 3.
+    heights_above_67 <- heights_no_na[heights_no_na > 67]
+    length(heights_above_67)
+    ```

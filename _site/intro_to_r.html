@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction to RStudio for Infectious Disease Modelling - Getting Started</title>
+<title>Introduction to RStudio for Infectious Disease Modelling - Introduction to R Programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -97,8 +131,8 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Getting Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./intro_to_r.qmd"> 
-<span class="menu-text">Introduction to R</span></a>
+    <a class="nav-link" href="./intro_to_r.html"> 
+<span class="menu-text">Introduction to R Programming</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./visualization.qmd"> 
@@ -115,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Getting Started</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Introduction to R Programming</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -178,29 +212,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-is-r" id="toc-what-is-r" class="nav-link active" data-scroll-target="#what-is-r">What is R?</a>
+  <li><a href="#creating-objects-in-r" id="toc-creating-objects-in-r" class="nav-link active" data-scroll-target="#creating-objects-in-r">Creating objects in R</a>
   <ul class="collapse">
-  <li><a href="#why-learn-r" id="toc-why-learn-r" class="nav-link" data-scroll-target="#why-learn-r">Why learn R?</a></li>
-  <li><a href="#r-does-not-involve-lots-of-pointing-and-clicking" id="toc-r-does-not-involve-lots-of-pointing-and-clicking" class="nav-link" data-scroll-target="#r-does-not-involve-lots-of-pointing-and-clicking">R does not involve lots of pointing and clicking</a>
-  <ul class="collapse">
-  <li><a href="#r-code-is-great-for-reproducibility" id="toc-r-code-is-great-for-reproducibility" class="nav-link" data-scroll-target="#r-code-is-great-for-reproducibility">R code is great for reproducibility</a></li>
-  <li><a href="#r-is-interdisciplinary-and-extensible" id="toc-r-is-interdisciplinary-and-extensible" class="nav-link" data-scroll-target="#r-is-interdisciplinary-and-extensible">R is interdisciplinary and extensible</a></li>
-  <li><a href="#r-works-on-data-of-different-sizes" id="toc-r-works-on-data-of-different-sizes" class="nav-link" data-scroll-target="#r-works-on-data-of-different-sizes">R works on data of different sizes</a></li>
-  <li><a href="#r-produces-high-quality-graphics" id="toc-r-produces-high-quality-graphics" class="nav-link" data-scroll-target="#r-produces-high-quality-graphics">R produces high-quality graphics</a></li>
-  <li><a href="#r-has-a-large-and-welcoming-community" id="toc-r-has-a-large-and-welcoming-community" class="nav-link" data-scroll-target="#r-has-a-large-and-welcoming-community">R has a large and welcoming community</a></li>
-  <li><a href="#not-only-is-r-free-but-it-is-also-open-source-and-cross-platform" id="toc-not-only-is-r-free-but-it-is-also-open-source-and-cross-platform" class="nav-link" data-scroll-target="#not-only-is-r-free-but-it-is-also-open-source-and-cross-platform">Not only is R free, but it is also open-source and cross-platform</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#what-is-rstudio" id="toc-what-is-rstudio" class="nav-link" data-scroll-target="#what-is-rstudio">What is RStudio?</a>
-  <ul class="collapse">
-  <li><a href="#create-an-r-project" id="toc-create-an-r-project" class="nav-link" data-scroll-target="#create-an-r-project"><strong>Create an R Project</strong></a></li>
-  <li><a href="#working-directory" id="toc-working-directory" class="nav-link" data-scroll-target="#working-directory">Working directory</a></li>
-  <li><a href="#example-of-a-working-directory-structure" id="toc-example-of-a-working-directory-structure" class="nav-link" data-scroll-target="#example-of-a-working-directory-structure">Example of a working directory structure</a></li>
-  <li><a href="#absolute-vs-relative-paths" id="toc-absolute-vs-relative-paths" class="nav-link" data-scroll-target="#absolute-vs-relative-paths">Absolute vs Relative paths</a></li>
-  <li><a href="#checking-your-working-directory" id="toc-checking-your-working-directory" class="nav-link" data-scroll-target="#checking-your-working-directory">Checking your working directory</a></li>
-  <li><a href="#interacting-with-r" id="toc-interacting-with-r" class="nav-link" data-scroll-target="#interacting-with-r">Interacting with R</a></li>
-  <li><a href="#how-to-learn-more-after-the-workshop" id="toc-how-to-learn-more-after-the-workshop" class="nav-link" data-scroll-target="#how-to-learn-more-after-the-workshop">How to learn more after the workshop?</a></li>
-  <li><a href="#seeking-help" id="toc-seeking-help" class="nav-link" data-scroll-target="#seeking-help">Seeking help</a></li>
+  <li><a href="#objects-vs.-variables" id="toc-objects-vs.-variables" class="nav-link" data-scroll-target="#objects-vs.-variables"><strong>Objects vs.&nbsp;Variables</strong></a></li>
+  <li><a href="#comments" id="toc-comments" class="nav-link" data-scroll-target="#comments"><strong>Comments</strong></a></li>
+  <li><a href="#challenge" id="toc-challenge" class="nav-link" data-scroll-target="#challenge">Challenge</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -214,7 +230,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Getting Started</h1>
+<h1 class="title">Introduction to R Programming</h1>
 </div>
 
 
@@ -231,178 +247,121 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="what-is-r" class="level1">
-<h1>What is R?</h1>
-<p><img src="https://www.r-project.org/Rlogo.png" width="60" height="47"></p>
-<p><strong>R</strong> is a free software environment for statistical computing, data visualization, and data analysis. It is widely used in academic research, public health, and industry. It allows you to work with data and create plots, statistical models, and even simulations.</p>
-<section id="why-learn-r" class="level2">
-<h2 class="anchored" data-anchor-id="why-learn-r">Why learn R?</h2>
-</section>
-<section id="r-does-not-involve-lots-of-pointing-and-clicking" class="level2">
-<h2 class="anchored" data-anchor-id="r-does-not-involve-lots-of-pointing-and-clicking">R does not involve lots of pointing and clicking</h2>
-<p>The learning curve might be steeper than with other software, but with R, the results of your analysis do not rely on remembering a succession of pointing and clicking, but instead on a series of written commands, and that’s a good thing!</p>
-<p>So, if you want to redo your analysis because you collected more data, you don’t have to remember which button you clicked in which order to obtain your results; you just have to run your script again.</p>
-<p>Working with scripts makes the steps you used in your analysis clear, and the code you write can be inspected by someone else who can give you feedback and spot mistakes.</p>
-<p>Working with scripts also forces you to have a deeper understanding of what you are doing, and facilitates your learning and comprehension of the methods you use.</p>
-<section id="r-code-is-great-for-reproducibility" class="level3">
-<h3 class="anchored" data-anchor-id="r-code-is-great-for-reproducibility">R code is great for reproducibility</h3>
-<p>Reproducibility is when someone else (including your future self) can obtain the same results from the same dataset when using the same analysis.</p>
-<p>R integrates with other tools to generate reports from your code. If you collect more data, or fix a mistake in your dataset, the figures and the statistical tests in your manuscript are updated automatically after running the code again.</p>
-<p>An increasing number of journals and funding agencies expect analyses to be reproducible, so knowing R will give you an edge with these requirements.</p>
-</section>
-<section id="r-is-interdisciplinary-and-extensible" class="level3">
-<h3 class="anchored" data-anchor-id="r-is-interdisciplinary-and-extensible">R is interdisciplinary and extensible</h3>
-<p>With 10,000+ packages that can be installed to extend its capabilities, R provides a framework that allows you to combine statistical approaches from many scientific disciplines to best suit the analytical framework you need to analyze your data.</p>
-<p>For instance, R has packages for image analysis, GIS, time series, population genetics, and a lot more.</p>
-</section>
-<section id="r-works-on-data-of-different-sizes" class="level3">
-<h3 class="anchored" data-anchor-id="r-works-on-data-of-different-sizes">R works on data of different sizes</h3>
-<p>The skills you learn with R scale easily with the size of your dataset. Whether your dataset has hundreds or millions of lines, it won’t make much difference to you.</p>
-<p>R is designed for data analysis. It comes with special data structures and data types that make handling of missing data and statistical factors convenient.</p>
-<p>R can connect to spreadsheets, databases, and many other data formats, on your computer or on the web.</p>
-</section>
-<section id="r-produces-high-quality-graphics" class="level3">
-<h3 class="anchored" data-anchor-id="r-produces-high-quality-graphics">R produces high-quality graphics</h3>
-<p>The plotting functionalities in R are endless, and allow you to adjust any aspect of your graph to convey most effectively the message from your data.</p>
-</section>
-<section id="r-has-a-large-and-welcoming-community" class="level3">
-<h3 class="anchored" data-anchor-id="r-has-a-large-and-welcoming-community">R has a large and welcoming community</h3>
-<p>Thousands of people use R daily. Many of them are willing to help you through mailing lists and websites such as <a href="https://stackoverflow.com">Stack Overflow</a>, or on the <a href="https://community.rstudio.com">RStudio Community</a>.</p>
-</section>
-<section id="not-only-is-r-free-but-it-is-also-open-source-and-cross-platform" class="level3">
-<h3 class="anchored" data-anchor-id="not-only-is-r-free-but-it-is-also-open-source-and-cross-platform">Not only is R free, but it is also open-source and cross-platform</h3>
-<p>Anyone can inspect the source code to see how R works. Because of this transparency, there is less chance for mistakes, and if you (or someone else) find some, you can report and fix bugs.</p>
-</section>
-</section>
-</section>
-<section id="what-is-rstudio" class="level1">
-<h1>What is RStudio?</h1>
-<p><img src="images/clipboard-2534404882.png" class="img-fluid" width="60"></p>
-<p><a href="https://posit.co/">RStudio</a> is currently a very popular Integrated Development Environment (IDE) for working with R. An IDE is an application used by software developers that facilitates programming by offering source code editing, building and debugging tools all integrated into one application. To function correctly, RStudio needs R and therefore both need to be installed on your computer.</p>
-<p>The RStudio Desktop open-source product is free under the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">Affero General Public License (AGPL) v3</a>. <a href="https://posit.co/products/open-source/rstudio/">Other versions of RStudio</a> are also available.</p>
-<p>We will use RStudio IDE to write code, navigate the files on our computer, inspect the variables we are going to create, and visualize the plots we will generate. RStudio can also be used for other things (e.g., version control, developing packages, writing Shiny apps) that we will not cover during the workshop.</p>
-<p>RStudio interface screenshot. Clockwise from top left: Source, Environment/History, Files/Plots/Packages/Help/Viewer, Console.</p>
-<p>RStudio is divided into 4 “Panes”:</p>
-<ol type="1">
-<li>the <strong>Source</strong> for your scripts and documents (top-left),</li>
-<li>your <strong>Environment/History</strong> (top-right),</li>
-<li>your <strong>Files/Plots/Packages/Help/Viewer</strong> (bottom-right),</li>
-<li>and the <strong>Console</strong> (bottom-left).</li>
-</ol>
-<p>The layout can be customized from <em>Tools → Global Options → Pane Layout</em>.</p>
-<p>One of the advantages of using RStudio is that all the information you need to write code is available in a single window. Additionally, with many shortcuts, autocompletion, and highlighting for the major file types you use while developing in R, RStudio will make typing easier and less error-prone.</p>
-<section id="create-an-r-project" class="level2">
-<h2 class="anchored" data-anchor-id="create-an-r-project"><strong>Create an R Project</strong></h2>
-<p>Before starting to write code in RStudio, we need to create an R Project. An R Project is a workspace where you can keep all files and settings associated with a project. It makes resuming work easier.</p>
-<p>To create an “R Project”:</p>
-<ol type="1">
-<li>Start RStudio.</li>
-<li>Under the <code>File</code> menu, click <code>New Project</code>. Choose <code>New Directory</code>, then <code>New Project</code>.</li>
-<li>Enter a name and choose a convenient location. This will be your <strong>working directory</strong>.</li>
-<li>Click on <code>Create Project</code>.</li>
-<li>(Optional) Set preferences to “Never” save workspace in RStudio.</li>
-</ol>
-<p>RStudio’s default preferences generally work well, but saving a workspace to&nbsp;<code>.RData</code>&nbsp;can be cumbersome, especially if you are working with larger datasets as this would save all the data that is loaded into R into the&nbsp;<code>.RData</code>&nbsp;file.</p>
-<p>To turn it off, go to: <code>Tools</code> → <code>Global Options</code> → General and select the ‘Never’ option for <code>Save workspace to .RData on exit</code>.</p>
-</section>
-<section id="working-directory" class="level2">
-<h2 class="anchored" data-anchor-id="working-directory">Working directory</h2>
-<p>Whenever we are working on a project, it is good practice to keep a set of related data, analyses, and text self-contained in a single folder, called the <strong>working directory</strong>.</p>
-<p>Using a consistent folder structure across your projects will help keep things organized, and will also make it easy to find things in the future. This can be especially helpful when you have multiple projects. In general, you may create directories (folders) for <strong>scripts</strong>, <strong>data</strong>, and <strong>documents</strong>.</p>
+<section id="creating-objects-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="creating-objects-in-r">Creating objects in R</h2>
+<p>You can get output from R simply by typing math in the console:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span> <span class="co"># addition</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span> <span class="co"># deduction</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">12</span> <span class="sc">/</span> <span class="dv">7</span> <span class="co"># division</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.714286</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span> <span class="co"># multiplication</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">^</span> <span class="dv">2</span> <span class="co"># square </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>However, to do useful and interesting things, we need to assign <em>values</em> to <em>objects</em>. To create an object, we need to give it a name followed by the assignment operator <code>&lt;-</code>, and the value we want to give it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>weight_kg <span class="ot">&lt;-</span> <span class="dv">55</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>&lt;-</code>&nbsp;is the assignment operator. It assigns values on the right to objects on the left. So, after executing&nbsp;<code>x &lt;- 3</code>, the value of&nbsp;<code>x</code>&nbsp;is&nbsp;<code>3</code>. The arrow can be read as 3&nbsp;<strong>goes into</strong>&nbsp;<code>x</code>.</p>
+<p>For historical reasons, you can also use&nbsp;<code>=</code>&nbsp;for assignments, but not in every context. Because of the&nbsp;<a href="http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html">slight</a>&nbsp;<a href="http://r.789695.n4.nabble.com/Is-there-any-difference-between-and-tp878594p878598.html">differences</a>&nbsp;in syntax, it is good practice to always use&nbsp;<code>&lt;-</code>&nbsp;for assignments.</p>
+<p>In RStudio, typing <code>Alt + -</code> (push Alt at the same time as the - key) will write <code>&lt;-</code> in a single keystroke on a PC, while typing <code>Option + -</code> (Option and - key) does the same in a Mac.</p>
+<p>Objects can be named like <code>x</code>, <code>current_temperature</code>, or <code>subject_id</code>.</p>
 <ul>
-<li><p><code>data/</code><br>
-Use this folder to store your raw data. For the sake of transparency and provenance, you should <em>always</em> keep a copy of your raw data accessible and do as much of your data cleanup and preprocessing programmatically (<em>i.e.</em>, with scripts, rather than manually).<br>
-Separating raw data from processed data is also a good idea. For example, you could have files <code>data/raw/survey.plot1.txt</code> and <code>data/raw/survey.plot2.txt</code> kept separate from a <code>data_output/survey.csv</code> file generated by the <code>scripts/01.preprocess.survey.R</code> script.</p></li>
-<li><p><code>documents/</code><br>
-This would be a place to keep documentation and other text documents.</p></li>
-<li><p><code>scripts/</code><br>
-This would be the location to keep your R scripts for different analyses or plotting.</p></li>
+<li><p>Be explicit and not too long</p></li>
+<li><p>Not start with a number (e.g., <code>2x</code> is invalid, but&nbsp;<code>x2</code>&nbsp;is)</p></li>
+<li><p>Be case-sensitive (e.g., <code>weight_kg</code> ≠ <code>Weight_kg</code>)</p></li>
+<li><p>Avoid using names of built-in functions like <code>c</code>, <code>T</code>, <code>mean</code>, <code>data</code>, or <code>if</code> (see <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html">here</a> for a complete list). If in doubt, check the help to see if the name is already in use. It’s also best to avoid dots (<code>.</code>) within an object name as in <code>my.dataset</code>. Instead, use underscores (<code>_</code>).</p></li>
+<li><p>It is also recommended to use nouns for object names, and verbs for function names.</p></li>
+<li><p>To improve readability, use consistent naming conventions. CIn R, three popular style guides are <a href="#0">Google’s</a>, <a href="#0">Jean Fan’s</a> and the <a href="#0">tidyverse’s</a>.</p></li>
+<li><p>You can install the <code>lintr</code> package to catch issues in your code style.</p></li>
 </ul>
-<p>You may want additional directories or subdirectories depending on your project needs, but these should form the backbone of your working directory.</p>
-<hr>
+<section id="objects-vs.-variables" class="level3">
+<h3 class="anchored" data-anchor-id="objects-vs.-variables"><strong>Objects vs.&nbsp;Variables</strong></h3>
+<p>What are known as <code>objects</code> in <code>R</code> are known as <code>variables</code> in many other programming languages. Depending on the context, <code>object</code> and <code>variable</code> can have drastically different meanings. However, in this lesson, the two words are used synonymously. For more information see: <a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Objects</a></p>
+<p>When assigning a value to an object, R does not print anything. You can force R to print the value by using parentheses or by typing the object name:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>weight_kg <span class="ot">&lt;-</span> <span class="dv">55</span>    <span class="co"># doesn't print anything</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>(weight_kg <span class="ot">&lt;-</span> <span class="dv">55</span>)  <span class="co"># but putting parenthesis around the call prints the value of `weight_kg`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 55</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weight_kg          <span class="co"># and so does typing the name of the object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 55</code></pre>
+</div>
+</div>
+<p>Now that R has&nbsp;<code>weight_kg</code>&nbsp;in memory, we can do arithmetic with it. For instance, we may want to convert this weight into pounds (weight in pounds is 2.2 times the weight in kg):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fl">2.2</span> <span class="sc">*</span> weight_kg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 121</code></pre>
+</div>
+</div>
+<p>We can also change an object’s value by assigning it a new one:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>weight_kg <span class="ot">&lt;-</span> <span class="fl">57.5</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fl">2.2</span> <span class="sc">*</span> weight_kg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 126.5</code></pre>
+</div>
+</div>
+<p>This means that assigning a value to one object does not change the values of other objects For example, let’s store the animal’s weight in pounds in a new object,&nbsp;<code>weight_lb</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weight_lb <span class="ot">&lt;-</span> <span class="fl">2.2</span> <span class="sc">*</span> weight_kg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and then change&nbsp;<code>weight_kg</code>&nbsp;to 100.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>weight_kg <span class="ot">&lt;-</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What do you think is the current content of the object&nbsp;<code>weight_lb</code>? 126.5 or 220?</p>
 </section>
-<section id="example-of-a-working-directory-structure" class="level2">
-<h2 class="anchored" data-anchor-id="example-of-a-working-directory-structure">Example of a working directory structure</h2>
-<p>For this workshop, we will need a <code>data/</code> folder to store our raw data, and we will use <code>data_output/</code> for when we learn how to export data as CSV files, and <code>fig_output/</code> folder for the figures that we will save.</p>
-<ul>
-<li>Under the <strong>Files</strong> tab on the right of the screen, click on <strong>New Folder</strong> and create a folder named <code>data</code> within your newly created working directory (e.g., <code>~/my-first-project/data</code>).<br>
-Repeat these operations to create a <code>data_output/</code> and a <code>fig_output</code> folder.</li>
-</ul>
-<p>We are going to keep the script in the root of our working directory because we are only going to use one file and it will make things easier.</p>
-<p>Your working directory should now look like this:</p>
-<p>my-first-project/<br>
-</p>
-<p>├── data/<br>
-</p>
-<p>├── data_output/<br>
-</p>
-<p>├── fig_output/<br>
-</p>
-<p>└── script.R</p>
-<hr>
+<section id="comments" class="level3">
+<h3 class="anchored" data-anchor-id="comments"><strong>Comments</strong></h3>
+<p>The comment character in R is <code>#</code>, anything to the right of a <code>#</code> in a script will be ignored by R. It is useful to leave notes and explanations in your scripts. RStudio makes it easy to comment or uncomment a paragraph: after selecting the lines you want to comment, press at the same time on your keyboard <code>Ctrl</code> + <code>Shift</code> + <code>C</code>. If you only want to comment out one line, you can put the cursor at any location of that line (i.e.&nbsp;no need to select the whole line), then press <code>Ctrl</code> + <code>Shift</code> + <code>C</code>.</p>
 </section>
-<section id="absolute-vs-relative-paths" class="level2">
-<h2 class="anchored" data-anchor-id="absolute-vs-relative-paths">Absolute vs Relative paths</h2>
-<p>The working directory is an important concept to understand. It is the place from where R will be looking for and saving the files. When you write code for your project, it should refer to files in relation to the root of your working directory and only need files within this structure.</p>
-<p>All of the scripts within this folder can then use <strong>relative paths</strong> to files in the working directory that indicate where inside the project a file is located (as opposed to <strong>absolute paths</strong>, which point to where a file is on a specific computer). Working this way makes it a lot easier to move your project around on your computer and share it with others without worrying about whether or not the underlying scripts will still work.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Absolute vs Relative paths examples">
+<section id="challenge" class="level3">
+<h3 class="anchored" data-anchor-id="challenge">Challenge</h3>
+<p>What are the values after each statement in the following?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">&lt;-</span> <span class="fl">47.5</span>      <span class="co"># mass?</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">122</span>        <span class="co"># age?</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">&lt;-</span> mass <span class="sc">*</span> <span class="fl">2.0</span>  <span class="co"># mass?</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> age <span class="sc">-</span> <span class="dv">20</span>     <span class="co"># age?</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>mass_index <span class="ot">&lt;-</span> mass <span class="sc">/</span> age  <span class="co"># mass_index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Absolute vs Relative paths examples
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Relative path:</strong> <code>data/dataset1.txt</code><br>
-<strong>Absolute path:</strong> <code>C:/Users/User1/Documents/R/my-first-project/data/dataset1.txt</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">&lt;-</span> <span class="fl">47.5</span>         <span class="co"># mass is 47.5</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="dv">122</span>           <span class="co"># age is 122</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>mass <span class="ot">&lt;-</span> mass <span class="sc">*</span> <span class="fl">2.0</span>   <span class="co"># mass is 95</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> age <span class="sc">-</span> <span class="dv">20</span>      <span class="co"># age is 102</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>mass_index <span class="ot">&lt;-</span> mass <span class="sc">/</span> age  <span class="co"># mass_index is 0.931</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>Using RStudio projects makes it easy to organise your files in the project and ensures that your working directory is set properly. RStudio shows your current working directory at the top of your window.</p>
-<hr>
-</section>
-<section id="checking-your-working-directory" class="level2">
-<h2 class="anchored" data-anchor-id="checking-your-working-directory">Checking your working directory</h2>
-<p>Another way to check your working directory is by typing <code>getwd()</code> in the console pane.</p>
-<p>If for some reason your working directory is not what it should be, you can change it in the RStudio interface by navigating in the file browser where your working directory should be, and clicking on the blue gear icon <strong>More</strong>, and select <strong>Set As Working Directory</strong>.</p>
-<p>Alternatively, you can use <code>setwd("/path/to/working/directory")</code> to reset your working directory (<em>not recommended</em>). However, your scripts should not include this line because it will fail on someone else’s computer.</p>
-<hr>
-</section>
-<section id="interacting-with-r" class="level2">
-<h2 class="anchored" data-anchor-id="interacting-with-r">Interacting with R</h2>
-<p>The basis of programming is that we write down instructions for the computer to follow, and then we tell the computer to follow those instructions. We write, or <em>code</em>, instructions in R because it is a common language that both the computer and we can understand. We call the instructions <strong>commands</strong> and we tell the computer to follow the instructions by <strong>executing</strong> (also called <em>running</em>) those commands.</p>
-<p>There are two main ways of interacting with R:</p>
-<ul>
-<li>using the <strong>console</strong></li>
-<li>using <strong>script files</strong> (plain text files that contain your code)</li>
-</ul>
-<p>The <strong>console pane</strong> (bottom left in RStudio) is where commands typed in R are executed immediately. You can type commands directly into the console and press <code>Enter</code> to execute them — but they will be forgotten when you close the session.</p>
-<p>It is better to type the commands we want in the <strong>script editor</strong>, and save the script. This way, there is a complete record of what we did, and anyone (including our future selves!) can easily replicate the results.</p>
-<p>RStudio allows you to execute commands directly from the script editor by using the keyboard shortcut:</p>
-<ul>
-<li><code>Ctrl + Enter</code> (on Mac: <code>Cmd + Return</code>)</li>
-</ul>
-<p>The current line or all selected lines will be sent to the console and executed.</p>
-<p>You can find more shortcuts in this <a href="https://posit.co/resources/cheatsheets/">RStudio cheatsheet about the RStudio IDE</a>.</p>
-<p>To check a variable or an object without saving it in your script, type the command directly in the console.</p>
-<ul>
-<li><code>Ctrl + 1</code> and <code>Ctrl + 2</code> can be used to jump between the script and console panes.</li>
-</ul>
-<p>When R is ready to accept a command, the console shows a <code>&gt;</code> prompt. After running a command, it will return to <code>&gt;</code> when ready.</p>
-<p>If you see a <code>+</code> prompt, it means R is still waiting for you to finish the command (e.g., due to an unclosed parenthesis or quote). You can press <code>Esc</code> to cancel the incomplete command.</p>
-<hr>
-</section>
-<section id="how-to-learn-more-after-the-workshop" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-learn-more-after-the-workshop">How to learn more after the workshop?</h2>
-<p>The material we cover during this workshop will give you an initial taste of how you can use R to analyze data for your own research. However, you will need to learn more to do advanced operations such as cleaning your dataset, using statistical methods, or creating beautiful graphics.</p>
-<p>The best way to become proficient and efficient at R, as with any other tool, is to use it to address your actual research questions.</p>
-<p>As a beginner, it can feel daunting to write a script from scratch. Many people make their code available online, and modifying existing code to suit your purpose might make it easier for you to get started.</p>
-<hr>
-</section>
-<section id="seeking-help" class="level2">
-<h2 class="anchored" data-anchor-id="seeking-help">Seeking help</h2>
-<p><strong>Use the built-in RStudio help interface to search for more information on R functions</strong></p>
+</div>
 
 
 </section>
