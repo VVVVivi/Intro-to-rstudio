@@ -11,7 +11,7 @@ website:
         href: getting_started.qmd
       - text: Introduction to R Programming
         href: intro_to_r.qmd
-      - text: Visualization
+      - text: Visualization with ggplot2
         href: visualization.qmd
   sidebar:
     style: "floating"

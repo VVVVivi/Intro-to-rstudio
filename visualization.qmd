@@ -46,7 +46,6 @@ p <- ggplot(data = <data_frame>,
 -   Variable names like `<data_frame>` and `<var_x>` are placeholders you would replace with real column or data names.
 
 Before we start, please ensure you have installed `ggplot2` package:
-
 ```{r}
 # install.packages("ggplot2")
 library(ggplot2)
@@ -676,3 +675,4 @@ ggplot(df3, aes(
     fill = religion)) +
   geom_col(position = "dodge")
 ```
+
