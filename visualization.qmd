@@ -1,0 +1,678 @@
+---
+title: " Visualization with ggplot2"
+format:
+  html:
+    toc: true
+    toc-location: left
+editor: visual
+---
+
+# Introduction to ggplot2
+
+Hadley Wickham's **ggplot2** package is a powerful extension to R for creating graphics. It implements a "grammar of graphics," which breaks the task of plotting into several manageable steps. For standard plots, you usually only need three main steps:
+
+1.  Input your data using `ggplot()`,
+2.  Call a `geom_xxx()` function to specify the type of plot (e.g., scatter, line, boxplot),
+3.  Optionally adjust scales, legends, themes, etc.
+
+If you want more control over the appearance of your plot, you can add layers such as `scale`, legends, or color options. You can start simple and progressively refine your plots.
+
+1.  Compared to R's base graphics system, `ggplot2` produces more consistent and aesthetically pleasing outputs. It is particularly good when you need to combine different types of graphics or design custom visualizations.
+
+The typical steps for building a plot with ggplot2 are:
+
+1.  Prepare your data, typically in a data frame with each row as an observation and each column as a variable.
+2.  Use `ggplot()` to specify your data and aesthetics.
+3.  Add a geometric object using `geom_xxx()` to define the type of plot.
+4.  Optionally refine with:
+    -   Coordinate systems (e.g., `coord_cartesian()`, `scale_x_log10()`),
+    -   Scales and themes,
+    -   Titles and labels via `labs()`.
+
+A general formula to build a ggplot2 figure might look like this:
+
+```{r}
+#| eval: false
+p <- ggplot(data = <data_frame>, 
+            mapping = aes(x = <var_x>, y = <var_y>, ...)) +
+  geom_<geom_type>(...) +
+  scale_<scale_type>(...) +
+  coord_<coord_type>(...) +
+  labs(...)
+```
+
+-   `<...>` indicates optional parameters.
+-   The variable `p` stores all the data and settings for the plot and can be named arbitrarily.
+-   Variable names like `<data_frame>` and `<var_x>` are placeholders you would replace with real column or data names.
+
+Before we start, please ensure you have installed `ggplot2` package:
+
+```{r}
+# install.packages("ggplot2")
+library(ggplot2)
+```
+
+## References and Further Reading
+
+This chapter draws from the following key sources:
+
+-   **Healy, Kieran (2018). *Data Visualization: A Practical Introduction*. Princeton University Press.**\
+    <https://socviz.co/index.html>\
+    This book explains the use of ggplot in R and also covers some general principles of data visualization.
+
+-   **Claus O. Wilke (2019). *Fundamentals of Data Visualization*. O’Reilly Media.**\
+    <https://serialmentor.com/dataviz>\
+    This book also uses R's ggplot2 package, but the main text does not include code. It primarily discusses considerations when choosing chart types and how to combine different plot elements. Code is available for download on GitHub.
+
+-   **Winston Chang (2018). *R Graphics Cookbook*. O’Reilly Media.**\
+    Website: <https://r-graphics.org>\
+    This is the second edition, which discusses various types of R plots.
+
+-   **Wickham, Hadley (2016). *ggplot2: Elegant Graphics for Data Analysis*. New York: Springer.**
+
+-   **RStudio’s ggplot2 overview:**\
+    <https://ggplot2.tidyverse.org/articles/ggplot2-specs.html>
+
+## Datasets Used in Later Examples
+
+The following datasets will be used in the upcoming examples:
+
+-   The **gapminder** dataset from the `gapminder` package contains data across different years for dozens of countries, including continent, life expectancy, population, and per capita GDP. It includes 1704 observations and 6 variables.
+
+-   The `gss_sm` dataset from the `socviz` package includes part of the General Social Survey (GSS) data from the United States in 2016. It has 2867 observations and 32 variables. The variables mainly represent categorical attributes in social surveys, such as binary classification, ordinal classification, grouped numeric values, and integer values.
+
+-   The `organdata` dataset from the `socviz` package contains official statistics and related records of organ donation across 17 OECD countries over different years.
+
+-   The `elections_historic` dataset from the `socviz` package includes historical U.S. presidential election results. It includes information such as the candidates, party affiliations, and support percentages.
+
+-   The `asasec` dataset from the `socviz` package includes data from the American Sociological Association (ASA) annual membership surveys from 2005 to 2015.
+
+-   The `midwest` dataset from the `ggplot2` package contains statistical data on counties in the Midwestern United States, such as land area.
+
+-   The `diamonds` dataset from the `ggplot2` package.
+
+------------------------------------------------------------------------
+
+`gapminder` dataset:
+
+```{r}
+library(gapminder)
+head(gapminder, 20)
+```
+
+`gss_sm` dataset:
+
+```{r}
+library(socviz)
+head(gss_sm, 20)
+```
+
+# Scatter Plot
+
+## Basic Scatter Plot
+
+Using the `gapminder` dataset as an example, we’ll create a basic scatter plot and progressively improve it. This dataset contains data from multiple countries over multiple years, including life expectancy and GDP per capita. In a scatter plot, each point represents one year of data for one country. The most important components of a scatter plot are how the data are mapped to the x- and y-axes.
+
+First, call the `ggplot()` function and specify the dataset, mapping GDP per capita to the x-axis and life expectancy to the y-axis. The result is stored in an R object:
+
+```{r}
+p <- ggplot(data = gapminder,
+  mapping = aes(
+    x = gdpPercap,
+    y = lifeExp))
+```
+
+The x and y axes are the most common aesthetics, but you can also map variables to color, shape, or line type. At this stage, you don’t need to specify actual colors or symbols — just map the variables to these graphical features.
+
+In the call to `ggplot()`, the `data =`, `mapping =`, `x =`, and `y =` parts can be omitted for brevity. The same plot can be written as:
+
+```{r}
+p <- ggplot(gapminder, aes(gdpPercap, lifeExp))
+```
+
+nce the data and aesthetics are defined, you can create the plot by adding a `geom_xxx()` layer to specify the geometry type. Combine this with the result of `ggplot()` using a plus sign (`+`), like:
+
+```{r}
+p + geom_point()
+```
+
+In fact, the code above is equivalent to calling `print(p + geom_point())`. In R functions or loops, you need to explicitly use `print()` — otherwise the result will not be shown.
+
+To call `print()` explicitly, you can rewrite the code like this:
+
+```{r}
+p1 <- p + geom_point()
+print(p1)
+```
+
+## Step-by-Step Improvement
+
+By specifying a dataset, defining the aesthetic mappings, and choosing the appropriate geometry type, you can construct a basic plot. You can then improve the chart step by step by adjusting the coordinate system, axis labels, titles, legends, and color themes. In fact, the `ggplot2` package already provides reasonable defaults, and users often only need to make small modifications.
+
+The steps of building a plot are connected using the `+` operator — a unique syntax of `ggplot2`. For example, to add a fitted curve using the same mappings:
+
+```{r}
+p + geom_smooth()
+```
+
+To overlay a scatter plot and a fitted curve using the same mappings:
+
+```{r}
+p + geom_point() + geom_smooth()
+```
+
+By default, `geom_smooth()` uses the `gam()` function to calculate the smoothed curve. You can specify different fitting methods using arguments in `geom_smooth()`, such as a linear model:
+
+```{r}
+p + geom_point() + geom_smooth(method = "lm")
+```
+
+Note: The variables needed by the `geom_xxx()` functions are extracted from the object `p` created by the `ggplot()` function.
+
+In all the charts above, the x-axis variable (GDP per capita) is highly skewed with a long right tail, which causes most points to be compressed into the lower-left corner of the chart. You can improve the x-axis scale by applying a logarithmic transformation using the function `scale_x_log10()`:
+
+```{r}
+p + geom_point() +
+  geom_smooth(method = "gam") +
+  scale_x_log10()
+```
+
+In general, the fitted curve from a generalized additive model (GAM) is essentially a smoothed line. Note that when you apply a scale transformation, such as `scale_x_log10()`, the transformation is applied to the original data. However, the fitting in `geom_smooth()` happens after the transformation.
+
+In the previous chart, the formatting of the x-axis tick labels could be improved. You can do this by using the appropriate label formatting function from the `scales` package and passing it to the `labels` argument of `scale_x_log10()`:
+
+```{r}
+p + geom_point() +
+  geom_smooth(method = "gam") +
+  scale_x_log10(labels = scales::dollar)
+```
+
+The `labels` argument of `scale_xxx()` functions determines how tick mark numbers are displayed on the axis. The argument value should be a function. If the `scales` package doesn’t offer a suitable one, you can define your own function to convert numeric values into strings.
+
+The `scales` package provides label formatting functions for: `comma`, `date`, `dollar`, `math`, `number`, `ordinal`, `pvalue`, `scientific`, `time`, and more.
+
+## Color, Shape, and Linetype Mapping
+
+In the `ggplot()` function, the `mapping` argument within `aes()` is used to map variables to the x-axis, y-axis, color, shape, linetype, etc. These graphical element types can also be fixed as constants outside of `aes()`.
+
+For example, to use different colors to represent different continents, we map the `continent` variable to `color`:
+
+```{r}
+p <- ggplot(gapminder, aes(
+  x = gdpPercap,
+  y = lifeExp,
+  color = continent))
+```
+
+This code only maps continent to color, without specifying what the colors should be.
+
+Here is a scatter plot with multiple smooth lines:
+
+```{r}
+p + geom_point() +
+  geom_smooth(method="loess") +
+  scale_x_log10(labels=scales::dollar)
+
+```
+
+You can see that different continents have different colored dots, and each of the five continents has a fitted curve. However, some of the curves have different colors but visually similar hues, making it difficult to read. The legend on the right automatically generates a mapping between `continent` and color.
+
+The following plot shows how to assign both point color and fill color for shaded areas using `continent`, by specifying both `color` and `fill` in `aes()`:
+
+```{r}
+p <- ggplot(gapminder, mapping = aes(
+  x = gdpPercap,
+  y = lifeExp,
+  color = continent,
+  fill = continent))
+
+p + geom_point() +
+  geom_smooth(method="loess") +
+  scale_x_log10(labels=scales::dollar)
+
+```
+
+To specify a fixed color, try this:
+
+```{r}
+p <- ggplot(gapminder, aes(
+  x = gdpPercap,
+  y = lifeExp,
+  color = "chartreuse4"))
+
+p + geom_point() +
+  geom_smooth(method="loess") +
+  scale_x_log10(labels=scales::dollar)
+
+```
+
+We see that the scatter plot does not use chartreuse color, and the legend has an entry labeled `"chartreuse4"`. This is because `aes()` only maps variables, so `"chartreuse4"` is treated as a new variable. To use a constant color, you should set `color =` outside of `aes()`, like this:
+
+```{r}
+p <- ggplot(gapminder, aes(
+  x = gdpPercap,
+  y = lifeExp))
+
+p + geom_point(color="chartreuse4") +
+  geom_smooth(method="loess") +
+  scale_x_log10(labels=scales::dollar)
+```
+
+The `geom_xxx()` function accepts many arguments related to color, transparency, shape, linetype, etc. For example, the code below sets the point transparency and line appearance:
+
+```{r}
+p + geom_point(alpha=0.5) +
+  geom_smooth(method="lm", color="cadetblue1", se = FALSE, size = 4, alpha = 0.3) +
+  scale_x_log10(labels=scales::dollar)
+
+```
+
+Here, `size` sets the line thickness in mm, `se = FALSE` disables confidence intervals, and `alpha` sets transparency (0 to 1). Using transparency helps when many points overlap, as more overlap appears darker. You can also map transparency using `aes(alpha = variable)`.
+
+You can use the `linetype` argument to set line styles: `0` = solid line, `1–6` = dashed/dotted variations.
+
+To add proper titles, use `labs()`:
+
+```{r}
+p <- ggplot(gapminder, aes(
+  x = gdpPercap,
+  y = lifeExp)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method="gam") +
+  scale_x_log10(labels=scales::dollar) +
+  labs(
+    x = "GDP per capita",
+    y = "Life expectancy (years)",
+    title = "Relationship between Economy and Life Expectancy",
+    subtitle = "Each dot represents a country-year",
+    caption = "Data source: gapminder"
+  )
+
+```
+
+As you can see, `labs()` sets the main title, subtitle, axis labels, and bottom-right caption. Axis tick label formatting (e.g., for numeric scale) must be done using the `scale_xxx()` function.
+
+## Mapping Variables within `geom` Functions
+
+In the previous example, both `color` and `fill` were mapped to the variable `continent` in the `ggplot()` function. This made the scatter plot points colored by continent and also resulted in separate smooth curves for each continent. But what if we want a single smooth curve for all continents?
+
+If needed, you can specify aesthetic mappings individually within a `geom_xxx()` function using `mapping = aes(...)`. For example, the following code does not map continent to point color, but still allows `geom_smooth()` to show a unified curve:
+
+```{r}
+p <- ggplot(gapminder, aes(
+  x = gdpPercap,
+  y = lifeExp))
+
+p + geom_point(mapping = aes(color = continent)) +
+  geom_smooth(method = "loess") +
+  scale_x_log10(labels = scales::dollar)
+
+```
+
+You can also map a categorical variable to shape. For instance, filtering the 2007 data and mapping continent to `shape`:
+
+```{r}
+p <- ggplot(
+  data = filter(gapminder, year == 2007),
+  mapping = aes(
+    x = gdpPercap,
+    y = lifeExp,
+    shape = continent))
+
+p + geom_point(alpha = 0.4, size = 4) +
+  scale_x_log10(labels = scales::dollar)
+
+```
+
+This mapping is useful only when the number of points is relatively small. You can also use the `size` parameter to set symbol size (in mm). If multiple points share the same shape, you'll need to manually assign shapes via `shape =` in `geom_point()`. You can use integer codes (0–25) or character names like `"circle"` for common symbols. See the `ggplot2-specs` vignette for details.
+
+Note: Mapping a categorical variable will automatically group the data. `color` and `fill` mappings will typically imply a `group` aesthetic internally. However, for clarity, you may still need to map `group` explicitly.
+
+## Continuous Variable Color Mapping
+
+You can also map a continuous variable to a color gradient. While this is uncommon for 2D function contour plots, it can sometimes reduce readability.
+
+For example, mapping the logarithm of population size to a color gradient:
+
+```{r}
+p <- ggplot(gapminder, aes(
+  x = gdpPercap,
+  y = lifeExp,
+  color = log(pop)))
+
+p + geom_point() +
+  geom_smooth(method = "loess") +
+  scale_x_log10(labels = scales::dollar)
+
+```
+
+## Saving Plots
+
+When using RMarkdown to create documents, plots will automatically be embedded in the output (PDF, Word, HTML, etc.). However, for standalone export, you can use the following commands.
+
+To save the most recently generated plot as a PNG file:
+
+```{r}
+ggsave(filename = "filename.png")
+```
+
+To save as a PDF:
+
+```{r}
+ggsave(filename = "filename.pdf")
+```
+
+You can also save a plot stored in a variable:
+
+```{r}
+ggout01 <- p + geom_point()
+ggsave(filename = "filename.pdf", plot = ggout01)
+```
+
+You can specify size and scale using:
+
+```{r}
+ggsave(filename = "filename.pdf", plot = ggout01,
+       height = 12, width = 8, units = "cm")
+```
+
+Units can be specified as `"in"`, `"cm"`, or `"mm"`.
+
+# Line Plots, Grouping, and Faceting
+
+## Grouping in Plots and Line Charts
+
+When using the `gapminder` dataset to analyze the change in life expectancy over time (in years) for each country, you can use `geom_line()` to draw line plots. However, due to the large number of countries, simply specifying the `x` and `y` variables is not sufficient to produce meaningful plots, as shown below:
+
+```{r}
+p <- ggplot(gapminder, aes(
+  x = year,
+  y = lifeExp)) +
+  geom_line()
+```
+
+This does not produce the desired result of having one line per country, because the code does not specify grouping by country. Instead, the coordinates for all countries in the same year are connected by one line.
+
+Note that `geom_line()` connects points in order of increasing x-coordinate. If you want to connect points by their row order, use `geom_path()` instead.
+
+To fix this, you must specify grouping by country using the `group` aesthetic. Grouping works similarly to how `x`, `y`, `color`, or `fill` map variables. Here’s the corrected version:
+
+```{r}
+p <- ggplot(gapminder, aes(
+  x = year,
+  y = lifeExp,
+  group = country)) +
+  geom_line()
+```
+
+Each line now corresponds to a country. To find out which country has the lowest and most erratic life expectancy trend, you can use `filter()`:
+
+```{r}
+gapminder[which(gapminder$lifeExp < 3 & gapminder$year >= 1990),]
+
+```
+
+The country is Rwanda.
+
+To group by two or more categorical variables, use `interaction(...)`. For example, to draw a line plot of life expectancy in Rwanda:
+
+```{r}
+ggplot(gapminder[which(gapminder$country == "Rwanda")], 
+       aes(
+          x = year,
+          y = lifeExp)) +
+  geom_line()
+```
+
+In the above example, we filtered dataset as the first argument to `ggplot()`, and then further plotting layers can be added.
+
+If you want to add scatter points to each observation, use `geom_point()` together:
+
+```{r}
+ggplot(gapminder[which(gapminder$country == "Rwanda")], 
+       aes(
+          x = year,
+          y = lifeExp)) +
+  geom_line()+
+  geom_point()
+```
+
+Note: The y-axis in such plots should start at 0 so that the filled area is proportional to the value. This is the default in `ggplot2`.
+
+Another issue: If the x-axis is not numeric but a factor or string, the line segments will not connect.
+
+o control color, line type, or line thickness in `geom_line()`, use the arguments `color`, `linetype`, and `size`. Line types include:
+
+-   0: no line
+
+-   1: solid
+
+-   2: dashed
+
+-   3: dotted
+
+-   4: dotdash
+
+-   5: longdash
+
+-   6: twodash
+
+## Facets
+
+Previously, the plots for all countries contained too many lines, making them cluttered. You can divide the plotting area into multiple small blocks called facets, which partition the data by one or two categorical variables. Each subset is plotted in a separate panel.
+
+For the example above, we can place each continent’s graph in its own panel. Facets are not a type of aesthetic mapping but a way of laying out plots. Instead of setting facets inside `aes()`, we use the `facet_wrap()` function. For example:
+
+```{r}
+ggplot(gapminder, aes(
+  x = year,
+  y = lifeExp,
+  group = country)) +
+  geom_line() +
+  facet_wrap(~ continent)
+```
+
+To adjust where facet titles appear (top or bottom), you can use `facet_wrap()`'s `strip_position` argument and `switch` option.
+
+By default, all facets share the same x and y axes range. If they differ, readers may get confused. If you want independent scales, you can use the `scales` argument in `facet_wrap()`. Setting it to `"fixed"` (default) shares scales. `"free"` makes both x and y axes independent, `"free_x"` shares only y-axis, and `"free_y"` shares only x-axis.
+
+In `facet_wrap()`, use `ncol` to set number of columns, `nrow` for number of rows. The order should match the categorical variable’s defined order.
+
+Below is an example using `facet_wrap()` to show life expectancy trends in different continents, with improved axis titles and labels. Note that the `group = country` mapping must only be used in `geom_line()` and not in `geom_smooth()`, or the smoother will be drawn separately for each country:
+
+```{r}
+ggplot(gapminder, aes(
+  x = year,
+  y = lifeExp)) +
+  geom_line(
+    mapping = aes(group = country),
+    color = "gray70") +
+  geom_smooth(
+    method = "loess",
+    color = "cyan",
+    se = FALSE,
+    size = 1.1) +
+  facet_wrap(~ continent, ncol = 2) +
+  labs(
+    x = "Year",
+    y = "Life expectancy ",
+    title = "Trends in life expectancy in each country across five continents")
+```
+
+Note: the `group = country` mapping was moved from the `ggplot()` function into `geom_line()` to ensure smoothing is done at the continent level.
+
+The `facet_wrap()` function is best for visualizing different values of a single categorical variable across panels. You can also specify number of rows and columns. For two variables, use `facet_grid()`.
+
+For example, using the `gss_sm` dataset, to plot a scatter of age vs. number of children:
+
+```{r}
+p <- ggplot(gss_sm, aes(
+  x = age,
+  y = childs)) +
+  geom_point(alpha = 0.2)
+```
+
+To split by both sex and race:
+
+```{r}
+p + geom_point(alpha = 0.2) +
+  facet_grid(sex ~ race)
+```
+
+To add a smoother within each facet panel:
+
+```{r}
+p + geom_point(alpha = 0.2) +
+  geom_smooth() +
+  facet_grid(sex ~ race)
+```
+
+Although there’s no `group` mapping here, because the dataset is divided into 6 subsets by sex and race, each facet only contains its own data.
+
+# Bar plots
+
+Some `geom_xxx()` functions directly plot the data values, such as `geom_point()`, `geom_line()`, while others like `geom_smooth()` compute and plot results based on a specific statistical method. Every `geom_xxx()` function has a default `stat_xxx()` function used for calculation, although you can also specify a different statistical rule manually.
+
+Consider the example of a bar chart. The `geom_bar()` function in **ggplot2** can automatically count the number of occurrences of a categorical variable and draw a frequency bar chart. For example, to create a frequency bar chart of the `bigregion` variable in the `gss_sm` dataset:
+
+```{r}
+ggplot(gss_sm, aes(
+  x = bigregion)) +
+  geom_bar()
+```
+
+The result is a bar chart showing the number of respondents in each region. In the chart, the x-axis is specified by the user, while the y-axis is the automatically calculated frequency. In fact, `geom_bar()` automatically calls the statistical function `stat_freq()` to compute the frequency for each region, generating new variables `count` and `prop`. By default, `geom_bar()` uses `count` (frequency).
+
+Although ggplot2 can automatically calculate frequencies, it's generally better to compute the frequencies in advance and use ggplot2 just for plotting.
+
+This approach makes it easier to segment the steps and is especially useful when drawing bar charts. Therefore, the above example using tidyverse’s `count()` and ggplot2’s `geom_col()` can be rewritten as:
+
+```{r}
+# Step 1: Count frequency of each region
+freq_table <- table(gss_sm$bigregion)
+
+# Step 2: Convert table to data frame
+df1 <- data.frame(bigregion = names(freq_table), n = as.numeric(freq_table))
+
+# Step 3: Add ratio column
+df1$ratio <- df1$n / sum(df1$n)
+
+# Step 4: Create bar chart using ggplot2
+ggplot(df1, aes(
+  x = bigregion, 
+  y = n)) +
+  geom_col() +
+  labs(y = "Count")
+```
+
+To plot ratio:
+
+```{r}
+ggplot(df1, aes(
+  x = bigregion,
+  y = ratio)) +
+  geom_col() +
+  labs(y = "Ratio")
+
+```
+
+When the x-axis has many categories, the text labels for each group may overlap. Therefore, you can rotate the text labels 45 degrees:
+
+```{r}
+ggplot(df1, aes(
+  x = bigregion,
+  y = ratio)) +
+  geom_col() +
+  labs(y = "Ratio") +
+  theme(
+    axis.text.x = element_text(
+      angle = 45, vjust = 1, hjust = 1))
+
+```
+
+Another common way to solve overlapping category labels in a bar chart is to switch to a horizontal bar chart. The `coord_flip()` function in ggplot2 can be used to swap the x and y axes. This way, the category labels will be shown along the vertical axis but still be displayed horizontally, thus avoiding overlap:
+
+```{r}
+ggplot(df1, aes(
+  x = bigregion,
+  y = ratio)) +
+  geom_col() +
+  labs(y = "Ratio") +
+  coord_flip()
+```
+
+Sometimes people prefer more colorful and rich visualizations. The following example uses the `gss_sm` dataset to plot a bar chart of the `religion` variable, automatically assigning different colors to the bars by specifying `fill = religion`:
+
+```{r}
+# Count the number of observations for each religion
+religion_counts <- as.data.frame(table(gss_sm$religion))
+colnames(religion_counts) <- c("religion", "n")
+
+p <- ggplot(df2, aes(
+    x = religion, 
+    y = n, 
+    fill = religion)) 
+
+p + geom_col() +
+  labs(y = "Count")
+```
+
+Because `religion` is mapped to both the x and `fill` aesthetics, a fill legend is automatically added to the right of the chart. This legend is redundant. You can manually remove it by using `guides(fill = "none")`.
+
+```{r}
+p + geom_col() +
+  guides(fill = "none") +
+  labs(y = "Count")
+```
+
+Note: From a visualization theory perspective, the different colors in the chart above are unnecessary. Using a single color helps emphasize the data itself more effectively.
+
+### Segmented and Side-by-Side Bar Charts
+
+The bar chart above shows the frequency distribution of a single categorical variable. To visualize the joint distribution of two categorical variables, you can use segmented bar charts or side-by-side bar charts.
+
+For example, using the `gss_sm` dataset, you can first calculate the frequency by grouping based on `bigregion`, then within each group, calculate frequencies by `religion`, and compute the proportion of each `religion` within each `bigregion`. The plot after using `tidyverse` to compute the statistics is as follows:
+
+```{r}
+# Count frequency by bigregion and religion
+tab <- table(gss_sm$bigregion, gss_sm$religion)
+df3 <- as.data.frame(tab)
+names(df3) <- c("bigregion", "religion", "n")
+
+# Calculate ratio within each bigregion group
+df3$ratio <- ave(df3$n, df3$bigregion, FUN = function(x) x / sum(x))
+
+p <- ggplot(df3, aes(
+    x = bigregion, 
+    y = n,
+    fill = religion)) + 
+  geom_col()
+
+```
+
+This type of chart makes it easy to compare the frequency proportions of the major categories (here, `bigregion`), and also allows for relatively easy comparison of the subcategories (here, `religion`) within each major category. However, it becomes relatively difficult to compare across subcategories between different major categories. If there are only two subcategories, then comparing them across major categories is not an issue.
+
+Another approach is to normalize the height of each major category. The chart then only shows the relative proportions of subcategories within each major category, without showing the total frequencies of the major categories. It also does not allow for comparing the total frequencies of subcategories across different major categories, but does allow for easy comparison of subcategory proportions across major categories.
+
+```{r}
+p + geom_col(position = "fill") + 
+  labs(y = NULL)
+```
+
+In the above code, the `geom_col()` function uses the option `position = "fill"`.
+
+A stacked bar chart can show the frequency of each combination of subcategories, making it easier to compare the proportion and frequency of subcategories within each major category. However, it is not easy to compare the proportions across the major categories.
+
+```{r}
+p + geom_col(position = "dodge")
+```
+
+Change the y-axis in the above chart to represent the proportion within each major category (so that the proportions for each region sum to 1):
+
+```{r}
+ggplot(df3, aes(
+    x = bigregion, 
+    y = ratio,
+    fill = religion)) +
+  geom_col(position = "dodge")
+```
