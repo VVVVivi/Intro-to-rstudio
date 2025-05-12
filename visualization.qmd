@@ -31,21 +31,14 @@ The typical steps for building a plot with ggplot2 are:
 
 A general formula to build a ggplot2 figure might look like this:
 
-```{r}
-#| eval: false
-p <- ggplot(data = <data_frame>, 
-            mapping = aes(x = <var_x>, y = <var_y>, ...)) +
-  geom_<geom_type>(...) +
-  scale_<scale_type>(...) +
-  coord_<coord_type>(...) +
-  labs(...)
-```
+![](images/ggplot2_formula.png){fig-align="center" width="588"}
 
 -   `<...>` indicates optional parameters.
 -   The variable `p` stores all the data and settings for the plot and can be named arbitrarily.
 -   Variable names like `<data_frame>` and `<var_x>` are placeholders you would replace with real column or data names.
 
 Before we start, please ensure you have installed `ggplot2` package:
+
 ```{r}
 # install.packages("ggplot2")
 library(ggplot2)
@@ -80,21 +73,14 @@ The following datasets will be used in the upcoming examples:
 
 -   The `gss_sm` dataset from the `socviz` package includes part of the General Social Survey (GSS) data from the United States in 2016. It has 2867 observations and 32 variables. The variables mainly represent categorical attributes in social surveys, such as binary classification, ordinal classification, grouped numeric values, and integer values.
 
--   The `organdata` dataset from the `socviz` package contains official statistics and related records of organ donation across 17 OECD countries over different years.
-
--   The `elections_historic` dataset from the `socviz` package includes historical U.S. presidential election results. It includes information such as the candidates, party affiliations, and support percentages.
-
--   The `asasec` dataset from the `socviz` package includes data from the American Sociological Association (ASA) annual membership surveys from 2005 to 2015.
-
 -   The `midwest` dataset from the `ggplot2` package contains statistical data on counties in the Midwestern United States, such as land area.
-
--   The `diamonds` dataset from the `ggplot2` package.
 
 ------------------------------------------------------------------------
 
 `gapminder` dataset:
 
 ```{r}
+# install.packages("gapminder")
 library(gapminder)
 head(gapminder, 20)
 ```
@@ -102,6 +88,7 @@ head(gapminder, 20)
 `gss_sm` dataset:
 
 ```{r}
+# install.packages("socviz")
 library(socviz)
 head(gss_sm, 20)
 ```
@@ -157,13 +144,15 @@ p + geom_smooth()
 To overlay a scatter plot and a fitted curve using the same mappings:
 
 ```{r}
-p + geom_point() + geom_smooth()
+p + geom_point() + 
+  geom_smooth()
 ```
 
 By default, `geom_smooth()` uses the `gam()` function to calculate the smoothed curve. You can specify different fitting methods using arguments in `geom_smooth()`, such as a linear model:
 
 ```{r}
-p + geom_point() + geom_smooth(method = "lm")
+p + geom_point() + 
+  geom_smooth(method = "lm")
 ```
 
 Note: The variables needed by the `geom_xxx()` functions are extracted from the object `p` created by the `ggplot()` function.
@@ -273,10 +262,11 @@ You can use the `linetype` argument to set line styles: `0` = solid line, `1–6
 To add proper titles, use `labs()`:
 
 ```{r}
+#| warning: false
 p <- ggplot(gapminder, aes(
   x = gdpPercap,
-  y = lifeExp)) +
-  geom_point(alpha = 0.3) +
+  y = lifeExp)) 
+p + geom_point(alpha = 0.3) +
   geom_smooth(method="gam") +
   scale_x_log10(labels=scales::dollar) +
   labs(
@@ -312,7 +302,7 @@ You can also map a categorical variable to shape. For instance, filtering the 20
 
 ```{r}
 p <- ggplot(
-  data = filter(gapminder, year == 2007),
+  data = gapminder[which(gapminder$year == 2007),],
   mapping = aes(
     x = gdpPercap,
     y = lifeExp,
@@ -334,6 +324,7 @@ You can also map a continuous variable to a color gradient. While this is uncomm
 For example, mapping the logarithm of population size to a color gradient:
 
 ```{r}
+#| warning: false
 p <- ggplot(gapminder, aes(
   x = gdpPercap,
   y = lifeExp,
@@ -352,18 +343,21 @@ When using RMarkdown to create documents, plots will automatically be embedded i
 To save the most recently generated plot as a PNG file:
 
 ```{r}
+#| eval: false
 ggsave(filename = "filename.png")
 ```
 
 To save as a PDF:
 
 ```{r}
+#| eval: false
 ggsave(filename = "filename.pdf")
 ```
 
 You can also save a plot stored in a variable:
 
 ```{r}
+#| eval: false
 ggout01 <- p + geom_point()
 ggsave(filename = "filename.pdf", plot = ggout01)
 ```
@@ -371,6 +365,7 @@ ggsave(filename = "filename.pdf", plot = ggout01)
 You can specify size and scale using:
 
 ```{r}
+#| eval: false
 ggsave(filename = "filename.pdf", plot = ggout01,
        height = 12, width = 8, units = "cm")
 ```
@@ -407,7 +402,7 @@ p <- ggplot(gapminder, aes(
 Each line now corresponds to a country. To find out which country has the lowest and most erratic life expectancy trend, you can use `filter()`:
 
 ```{r}
-gapminder[which(gapminder$lifeExp < 3 & gapminder$year >= 1990),]
+gapminder[which(gapminder$lifeExp < 30 & gapminder$year >= 1990),]
 
 ```
 
@@ -416,10 +411,9 @@ The country is Rwanda.
 To group by two or more categorical variables, use `interaction(...)`. For example, to draw a line plot of life expectancy in Rwanda:
 
 ```{r}
-ggplot(gapminder[which(gapminder$country == "Rwanda")], 
-       aes(
-          x = year,
-          y = lifeExp)) +
+ggplot(gapminder[which(gapminder$country == "Rwanda"),], 
+       aes(x = year,
+           y = lifeExp)) +
   geom_line()
 ```
 
@@ -428,7 +422,7 @@ In the above example, we filtered dataset as the first argument to `ggplot()`, a
 If you want to add scatter points to each observation, use `geom_point()` together:
 
 ```{r}
-ggplot(gapminder[which(gapminder$country == "Rwanda")], 
+ggplot(gapminder[which(gapminder$country == "Rwanda"),], 
        aes(
           x = year,
           y = lifeExp)) +
@@ -459,6 +453,12 @@ o control color, line type, or line thickness in `geom_line()`, use the argument
 ## Facets
 
 Previously, the plots for all countries contained too many lines, making them cluttered. You can divide the plotting area into multiple small blocks called facets, which partition the data by one or two categorical variables. Each subset is plotted in a separate panel.
+
+There are two types of `facet` functions:
+
+-   `facet_wrap()` arranges the different plots into muliple rows and columns to cleanly fit on one page.
+
+-   `facet_grid()` plots all the categories in 1 row or 1 column.
 
 For the example above, we can place each continent’s graph in its own panel. Facets are not a type of aesthetic mapping but a way of laying out plots. Instead of setting facets inside `aes()`, we use the `facet_wrap()` function. For example:
 
@@ -604,8 +604,8 @@ Sometimes people prefer more colorful and rich visualizations. The following exa
 
 ```{r}
 # Count the number of observations for each religion
-religion_counts <- as.data.frame(table(gss_sm$religion))
-colnames(religion_counts) <- c("religion", "n")
+df2 <- as.data.frame(table(gss_sm$religion))
+colnames(df2) <- c("religion", "n")
 
 p <- ggplot(df2, aes(
     x = religion, 
@@ -626,7 +626,7 @@ p + geom_col() +
 
 Note: From a visualization theory perspective, the different colors in the chart above are unnecessary. Using a single color helps emphasize the data itself more effectively.
 
-### Segmented and Side-by-Side Bar Charts
+## Segmented and Side-by-Side Bar Charts
 
 The bar chart above shows the frequency distribution of a single categorical variable. To visualize the joint distribution of two categorical variables, you can use segmented bar charts or side-by-side bar charts.
 
@@ -646,7 +646,6 @@ p <- ggplot(df3, aes(
     y = n,
     fill = religion)) + 
   geom_col()
-
 ```
 
 This type of chart makes it easy to compare the frequency proportions of the major categories (here, `bigregion`), and also allows for relatively easy comparison of the subcategories (here, `religion`) within each major category. However, it becomes relatively difficult to compare across subcategories between different major categories. If there are only two subcategories, then comparing them across major categories is not an issue.
@@ -663,7 +662,11 @@ In the above code, the `geom_col()` function uses the option `position = "fill"`
 A stacked bar chart can show the frequency of each combination of subcategories, making it easier to compare the proportion and frequency of subcategories within each major category. However, it is not easy to compare the proportions across the major categories.
 
 ```{r}
-p + geom_col(position = "dodge")
+ggplot(df3, aes(
+    x = bigregion, 
+    y = n,
+    fill = religion)) +
+  geom_col(position = "dodge")
 ```
 
 Change the y-axis in the above chart to represent the proportion within each major category (so that the proportions for each region sum to 1):
@@ -676,3 +679,82 @@ ggplot(df3, aes(
   geom_col(position = "dodge")
 ```
 
+To compare the distribution of religious proportions across different regions, you can use faceting to assign each region to a separate panel:
+
+```{r}
+ggplot(df3, aes(
+  x = religion, y = ratio, fill=religion)) +
+　geom_col(position="dodge") +
+  labs(x=NULL, y="Ratio") + 
+  coord_flip() + 
+  facet_grid(~ bigregion) + 
+  guides(fill="none")
+```
+
+# Histogram and Density Estimation
+
+Bar charts (barplot) reflect the frequency distribution or proportion of categorical variables, whereas histograms reflect the distribution of continuous numerical variables.
+
+When using `geom_histogram()` to draw a histogram, it can automatically select an appropriate number of bins, or you can manually specify the number of bins.
+
+The `midwest` dataset included in ggplot2 contains statistical data for some counties in the Midwestern United States, such as area (unit: square miles). The following code uses a numerical variable that takes continuous values to draw a histogram using area and automatically determines the number of bins:
+
+```{r}
+p <- ggplot(midwest, aes(x = area))
+p + geom_histogram()
+```
+
+The y-axis of the above histogram shows frequency (`count`), i.e., the count of each bin. `geom_histogram()` by default calls `stat_bin()` to perform binning and frequency counting. The shape of the histogram depends on the number of bins and the starting position of the bins.
+
+You can use the `bins` argument to control the number of bins, use `binwidth` to control the width of each bin, or use `center` or `boundary` to set the alignment of bin centers or edges, respectively.
+
+```{r}
+p + geom_histogram(bins = 15)
+```
+
+You can use `fill` mapping in `geom_histogram()` to divide the histogram observations by a categorical variable. Then, the interior of each bar is colored based on the values of that variable. AThe length of each segment (with different colors) represents the frequency of a specific category within that bar.
+
+```{r}
+# Filter for states OH and WI using base R
+midwest_sub <- midwest[midwest$state %in% c("OH", "WI"), ]
+
+ggplot(midwest_sub, aes(
+  x = area, fill = state)) +
+  geom_histogram(bins = 10)
+```
+
+From the chart, we can see that counties with smaller land areas are mainly in OH, while counties with larger land areas are mainly in WI. `geom_density()` can be used to draw a density estimation curve for continuous variables.
+
+```{r}
+ggplot(midwest, aes(x = area)) +
+  geom_density()
+```
+
+The following code generates density estimates of land area for counties in each state, plotted on the same coordinate system.
+
+```{r}
+ggplot(midwest, aes(
+      x = area, 
+      color = state,
+      fill = state)) +
+  geom_density(alpha = 0.3)
+```
+
+We can see that counties in IN and MI tend to have smaller areas, while counties in WI tend to have larger areas. The chart above can also be recreated by using `geom_line(stat = "density")` to draw multiple density curves.
+
+```{r}
+ggplot(midwest, aes(
+      x = area, 
+      color = state)) +
+  geom_line(stat = "density")
+```
+
+The y-axis of `geom_density()` represents the density estimate. To plot histograms and density estimates on the same coordinate system, you need to change the y-axis of the histogram to also represent density estimates.
+
+```{r}
+ggplot(midwest, aes(x = area)) +
+  geom_histogram(
+    mapping = aes(y = ..density..), 
+    alpha = 0.6) +
+  geom_density(size = 1.1)
+```

@@ -11,26 +11,17 @@ website:
         href: getting_started.qmd
       - text: Introduction to R Programming
         href: intro_to_r.qmd
+      - text: Starting with Data
+        href: starting_with_data.qmd
       - text: Visualization with ggplot2
         href: visualization.qmd
-  sidebar:
-    style: "floating"
-    search: true
-    contents:
-      - section: "Description"
-        contents:
-          - index.qmd
-      - section: "Setup Instructions"
-        contents:
-          - getting-started.qmd
-          - intro-to-r.qmd
-          - visualization.qmd
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    toc-depth: 4
     toc-location: left
 
 editor: visual

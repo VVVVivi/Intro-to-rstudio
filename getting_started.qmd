@@ -8,7 +8,7 @@ format:
 
 # What is R?
 
-![](https://www.r-project.org/Rlogo.png){width="60" height="47"}
+![](https://www.r-project.org/Rlogo.png){fig-align="center" width="60" height="47"}
 
 **R** is a free software environment for statistical computing, data visualization, and data analysis. It is widely used in academic research, public health, and industry. It allows you to work with data and create plots, statistical models, and even simulations.
 
@@ -60,13 +60,15 @@ Anyone can inspect the source code to see how R works. Because of this transpare
 
 # What is RStudio?
 
-![](images/clipboard-2534404882.png){width="60"}
+![](images/clipboard-2534404882.png){fig-align="center" width="60"}
 
 [RStudio](https://posit.co/) is currently a very popular Integrated Development Environment (IDE) for working with R. An IDE is an application used by software developers that facilitates programming by offering source code editing, building and debugging tools all integrated into one application. To function correctly, RStudio needs R and therefore both need to be installed on your computer.
 
 The RStudio Desktop open-source product is free under the [Affero General Public License (AGPL) v3](https://www.gnu.org/licenses/agpl-3.0.en.html). [Other versions of RStudio](https://posit.co/products/open-source/rstudio/) are also available.
 
 We will use RStudio IDE to write code, navigate the files on our computer, inspect the variables we are going to create, and visualize the plots we will generate. RStudio can also be used for other things (e.g., version control, developing packages, writing Shiny apps) that we will not cover during the workshop.
+
+![](images/rstudio_interface%20.png){fig-align="center"}
 
 RStudio interface screenshot. Clockwise from top left: Source, Environment/History, Files/Plots/Packages/Help/Viewer, Console.
 
@@ -97,6 +99,8 @@ RStudio’s default preferences generally work well, but saving a workspace to 
 
 To turn it off, go to: `Tools` → `Global Options` → General and select the 'Never' option for `Save workspace to .RData on exit`.
 
+![](images/R_project.png){fig-align="center"}
+
 ## Working directory
 
 Whenever we are working on a project, it is good practice to keep a set of related data, analyses, and text self-contained in a single folder, called the **working directory**.
@@ -113,6 +117,8 @@ Using a consistent folder structure across your projects will help keep things o
 -   `scripts/`\
     This would be the location to keep your R scripts for different analyses or plotting.
 
+![](images/working_dicr.png){fig-align="center"}
+
 You may want additional directories or subdirectories depending on your project needs, but these should form the backbone of your working directory.
 
 ------------------------------------------------------------------------
@@ -128,6 +134,8 @@ We are going to keep the script in the root of our working directory because we 
 
 Your working directory should now look like this:
 
+![](images/first_project.png){fig-align="center"}
+
 ------------------------------------------------------------------------
 
 ## Absolute vs Relative paths
@@ -141,7 +149,9 @@ All of the scripts within this folder can then use **relative paths** to files i
 **Absolute path:** `C:/Users/User1/Documents/R/my-first-project/data/dataset1.txt`
 :::
 
-Using RStudio projects makes it easy to organise your files in the project and ensures that your working directory is set properly. RStudio shows your current working directory at the top of your window.
+Using RStudio projects makes it easy to organise your files in the project and ensures that your working directory is set properly. RStudio shows your current working directory at the top of the console.
+
+![](images/current_path.png){fig-align="center"}
 
 ------------------------------------------------------------------------
 
@@ -204,17 +214,21 @@ One of the fastest ways to get help is to use the RStudio help interface. This p
 
 By typing a keyword (e.g., `"Mean"`), RStudio will suggest relevant functions and display help files.
 
+![](images/seeking_help.png){fig-align="center"}
+
 **I know the name of the function I want to use, but I’m not sure how to use it:**
 
 If you need help with a specific function, such as `barplot()`, you can type:
 
 ```{r}
+#| eval: false
 ?barplot
 ```
 
 If you just need to remind yourself of the names of the arguments in the function, you can use:
 
 ```{r}
+#| eval: false
 args(lm)
 ```
 
@@ -223,6 +237,7 @@ args(lm)
 If you are looking for a function to do a particular task, you can use the `help.search()` function, which is called by the double question mark `??`. However, this only looks through the installed packages for help pages with a match to your search request.
 
 ```{r}
+#| eval: false
 ??kruskal
 ```
 
@@ -254,22 +269,25 @@ To get good help, Try to use the correct words to describe your problem clearly.
 To share an object with someone else, if it’s relatively small, you can use the function `dput()`. It will output R code that can be used to recreate the exact same object as the one in memory:
 
 ```{r}
+#| eval: false
 dput(head(iris))  # iris is an example data frame that comes with R
 ```
 
 If the object is larger, provide either the raw file (i.e., your CSV file) with your script up to the point of the error (and after removing everything that is not relevant to your issue). Alternatively, in particular if your question is not related to a data frame, you can save any R object to a file with `saveRDS()`:
 
 ```{r}
+#| eval: false
 saveRDS(iris, file = "/tmp/iris.rds")
 ```
 
-The content of this file is however not human readable and cannot be posted directly on Stack Overflow. Instead, it can be sent to someone by email who can read it with the `readRDS()` command (here it is assumed that the downloaded file is in a `Downloads` folder in the user’s home directory):
+The content of this file is however not human readable and cannot be posted directly on Stack Overflow. Instead, it can be sent to someone by email who can read it with the `readRDS()` command (here it is assumed that the downloaded file is in a `Downloads` folder in the user’s home directory):
 
 ```{r}
+#| eval: false
 data <- readRDS(file = "~/Downloads/iris.rds")
 ```
 
-Last, but certainly not least, **always include the output of `sessionInfo()`** for context as it provides critical information about your platform, the versions of R and the packages that you are using, and other information that can be very helpful to understand your problem.
+Last, but certainly not least, **always include the output of `sessionInfo()`** for context as it provides critical information about your platform, the versions of R and the packages that you are using, and other information that can be very helpful to understand your problem.
 
 ```{r}
 sessionInfo()

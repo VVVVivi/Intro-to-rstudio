@@ -1,0 +1,507 @@
+---
+title: "Starting with Data"
+format:
+  html:
+    toc: true
+    toc-location: left
+editor: visual
+---
+
+# Understanding Data
+
+Before diving into analysis, it's essential to first gain a clear understanding of your dataset. Proper data analysis starts with knowing what your data represents and how it is structured.
+
+## Reading in data from a file
+
+In this section, we will begin by examining an example dataset on dengue. To do this, we’ll start by loading the data into R and taking a closer look at its contents. We will use `read.csv()` to load into memory the content of the CSV file as an object of class `data.frame`.
+
+```{r}
+colombia_data <- read.csv("National-level data_COLOMBIA_20021229_20221231.csv")
+```
+
+This command won’t display anything on its own because the data is being assigned to a variable. To confirm that the data was loaded correctly, you can use `View` to check it out:
+
+```{r}
+#| eval: false
+View(colombia_data)
+```
+
+we can alos just look at the first few rows using the `head()` function:
+
+```{r}
+head(colombia_data)
+```
+
+> **Note**
+>
+> The `read.csv()` function assumes that values are separated by commas. However, in some regions, commas are used as decimal marks and semicolons (`;`) are used instead to separate fields. In such cases, you should use `read.csv2()`, which works similarly but expects different separators.
+>
+> If your data uses another format, you can customize separators manually. For example, the more general `read.table()` function allows you to define both the field separator and other options. To learn more, type `?read.csv` in your R console.
+>
+> For tab-separated files, `read.delim()` is another helpful function. All of these are actually shortcuts to `read.table()` with preset options. For instance, the same data can be loaded using: `colombia_data <- read.table(file = "datat/National-level data_COLOMBIA_20021229_20221231.csv", sep = ",", header = TRUE)`
+>
+> Just remember to set `header = TRUE` if your file contains column names, since `read.table()` assumes otherwise by default.
+
+## Data frames
+
+In R, data frames are one of the most commonly used data structures. They are extremely useful because many real-world datasets come in table format, which aligns well with how data frames organize information. In fact, data frames are the standard format for most data manipulation, plotting, and analysis tasks in R.
+
+A data frame stores data in a tabular layout where each column is a vector of the same length. Each column can hold only one type of data (e.g., numeric, character, or logical), but different columns can hold different types. For example, one column might contain numbers, another column text, and another logical values like `TRUE` or `FALSE`.
+
+Below is an illustration showing a simple data frame with three rows and three columns: one numeric, one character, and one logical:
+
+![](images/data_frame_structure.png){width="366"}
+
+To explore the structure of a data frame in R, you can use the `str()` function. This gives you a quick overview of column names, data types, and a preview of values:
+
+```{r}
+str(colombia_data)
+```
+
+### Inspecting `data.frame` Objects
+
+Before we start analysing the data, it's a good idea to take a quick look to understand what we’re working with. We also want to make sure our data has loaded correctly into R.
+
+We’ve already seen a few helpful functions like `head()`, `view()`, and `str()` that give us a quick look at the contents and structure of a data frame. Here are some other basic functions that can help us explore our data:'
+
+#### Check the Size
+
+-   `dim(data)` — tells you the number of rows and columns.
+
+-   `nrow(data)` — gives you the number of rows.
+
+-   `ncol(data)` — gives you the number of columns.
+
+#### View the Content
+
+-   `head(data)` — shows the first few rows (default is 6).
+
+-   `tail(data)` — shows the last few rows.
+
+#### Check the Names
+
+-   `names(data)` — shows the column names.
+
+-   `rownames(data)` — shows the row names (usually just numbers).
+
+#### Get a Quick Summary
+
+-   `str(data)` — gives an overview of the data frame: column names, data types, and a preview of values.
+
+-   `summary(data)` — provides basic statistics (like min, max, mean) for each column.
+
+Note: Most of these functions also work with other types of objects, not just `data.frame`.
+
+### Indexing and Subsetting Data Frames
+
+#### Numeric Indexing
+
+A data frame in R is like a table with rows and columns. To look at specific values inside this table, we use numbers to show the position of each item.
+
+To get data from a certain row and column, we use square brackets like this: `data[row, column]`. For example, `[2,3]` means row 2, column 3.
+
+**Important:** `[]` are for accessing data. `()` are for calling functions like `mean()` or `summary()`.
+
+Let’s look at a few more examples of how to select parts of a data frame using numbers.
+
+```{r}
+# get the value in the 1st row and 1st column
+colombia_data[1, 1]
+
+# get the value in the 1st row and 6th column
+colombia_data[1, 6]
+
+# get the entire 1st column as a vector
+colombia_data[, 1]
+
+# get the first 3 values from the 7th column
+colombia_data[1:3, 7]
+
+# get the entire 3rd row as a data frame
+colombia_data[3, ]
+
+# get the first 6 rows (just like the head() function)
+head_colombia <- colombia_data[1:6, ]
+```
+
+The `:` operator helps you create a sequence of numbers. For example:
+
+-   `1:10` gives you numbers from 1 to 10
+
+-   `10:1` gives you numbers from 10 to 1
+
+You can also leave out (exclude) parts of a data frame using the minus `-` sign:
+
+```{r}
+#| eval: false
+
+# all columns except the first one
+colombia_data[, -1]  
+
+# similar to head(colombia), keeps only rows 1 to 6
+colombia_data[-(7:34786), ]     
+```
+
+#### Name Indexing
+
+Instead of using numbers to access rows and columns, we can also use the names of the columns directly. This is called **name indexing**.
+
+Here are a few examples using the `colombia` data:
+
+```{r}
+# get the "value" column as a vector
+colombia_data[, "dengue_total"]
+
+```
+
+```{r}
+#| eval: false
+# this does the same thing
+colombia_data$dengue_total
+```
+
+```{r}
+# get the "Country" and "value" columns for the first three rows
+# (this mixes row numbers with column names)
+colombia_data[1:3, c("Year", "dengue_total")]
+```
+
+In RStudio, you can use the **Tab key** to auto-complete column names, which helps avoid typos.
+
+#### Logical indexing
+
+Sometimes we want to look at rows in our dataset that match a specific condition. This is called **logical indexing**. In R, we can use conditions to select the rows that meet our criteria.
+
+Here’s how we can find and work with records where the year is 2007 in our dataset:
+
+```{r}
+# get all the records where Year is 2007 and save those records into a new data frame
+year_2007_data <- colombia_data[colombia_data$Year == 2007, ]
+
+# count how many records are from the year 2007
+nrow(year_2007_data)
+```
+
+This method is helpful when you want to focus only on specific parts of your data — for example, all data points from a certain year, a certain region, or with a certain status.
+
+### Exercise
+
+Let’s try a few short tasks to help you explore how to work with rows in your dataset.
+
+1.  **Create a new data frame** that only includes row 200 from your dataset. Name it `data_200`.
+
+2.  **Use `nrow()` to find how many rows** are in your dataset. Then:
+
+    -   Pull out the **last row** using that number.
+    -   Use `tail()` to check the result.
+    -   Save the last row into a new data frame named `data_last`.
+
+3.  **Find the middle row** (the one halfway through the dataset). Save it in an object called `data_middle`.
+
+4.  Use **negative indexing** with `nrow()` to create a new object that keeps only the **first six rows** (like using `head()`).
+
+::: {.callout-note collapse="true" title="Answer"}
+```{r}
+# 1. Get the 200th row
+data_200 <- colombia_data[200, ]
+
+# 2. Use nrow() to get total number of rows
+n_rows <- nrow(colombia_data)
+
+# Extract last row using total number of rows
+data_last <- colombia_data[n_rows, ]
+
+# Optional: verify it looks correct
+tail(colombia_data)
+
+# 3. Get the middle row
+data_middle <- colombia_data[n_rows/2, ]
+
+# 4. Keep only the first 6 rows (remove rows 7 to the end)
+data_head <- colombia_data[-(7:n_rows), ]
+```
+:::
+
+## Working with Factors
+
+In our dataset, some columns like `T_res` (which shows if the data is recorded by week or year) look like text, but they actually represent categories. These kinds of columns are good candidates for `factor` in R.
+
+### What are factors?
+
+Factors are a special type in R used for **categorical data** — data that has a fixed set of possible values (called *levels*). For example, `T_res` only includes `"Week"` and `"Year"`, and these are its levels.
+
+By turning this column into a factor, we can make our data cleaner and often easier to analyze or visualize.
+
+We can convert these columns that contain categorical data to type factor by using the `factor()` function:
+
+```{r}
+colombia_data$T_res <- factor(colombia_data$T_res)
+```
+
+To check that it worked, we can use the `summary()` function:
+
+```{r}
+summary(colombia_data$T_res)
+```
+
+By default, R always sorts levels in alphabetical order. For instance, if you have a factor with 2 levels:
+
+```{r}
+sex <- factor(c("male", "female", "female", "male"))
+```
+
+R will assign `1` to the level `"female"` and `2` to the level `"male"` (because `f` comes before `m`, even though the first element in this vector is `"male"`). You can see this by using the function `levels()` and you can find the number of levels using `nlevels()`:
+
+```{r}
+levels(sex)
+nlevels(sex)
+```
+
+Sometimes, the order of the factors does not matter, other times you might want to specify the order because it is meaningful (e.g., “low”, “medium”, “high”), it improves your visualization, or it is required by a particular type of analysis. Here, one way to reorder our levels in the `sex` vector would be:
+
+```{r}
+sex # current order
+```
+
+```{r}
+sex <- factor(sex, levels = c("male", "female"))
+sex # after re-ordering
+```
+
+In R’s memory, these factors are represented by integers (1, 2, 3), but are more informative than integers because factors are self describing: `"female"`, `"male"` is more descriptive than `1`, `2`. Which one is “male”? You wouldn’t be able to tell just from the integer data. Factors, on the other hand, have this information built in. It is particularly helpful when there are many levels (like the species names in our example dataset).
+
+### **Converting factors**
+
+If you need to convert a factor to a character vector, you use `as.character(x)`.
+
+```{r}
+as.character(sex)
+```
+
+In some cases, you may have to convert factors where the levels appear as numbers (such as concentration levels or years) to a numeric vector. For instance, in one part of your analysis the years might need to be encoded as factors (e.g., comparing average weights across years) but in another part of your analysis they may need to be stored as numeric values (e.g., doing math operations on the years). This conversion from factor to numeric is a little trickier. The `as.numeric()` function returns the index values of the factor, not its levels, so it will result in an entirely new (and unwanted in this case) set of numbers. One method to avoid this is to convert factors to characters, and then to numbers.
+
+Another method is to use the `levels()` function. Compare:
+
+```{r}
+year_fct <- factor(c(1990, 1983, 1977, 1998, 1990))
+as.numeric(year_fct)               # Wrong! And there is no warning...
+as.numeric(as.character(year_fct)) # Works...
+as.numeric(levels(year_fct))[year_fct]    # The recommended way.
+```
+
+Notice that in the `levels()` approach, three important steps occur:
+
+-   We obtain all the factor levels using `levels(year_fct)`.
+
+-   We convert these levels to numeric values using `as.numeric(levels(year_fct))`.
+
+-   We then access these numeric values using the underlying integers of the vector `year_fct` inside the square brackets.
+
+# Data Manipulation
+
+Sometimes, your dataset isn’t in the shape you need for plotting or analysis. In this section, we’ll learn how to **manipulate data** using only **basic R commands**—no extra packages needed.
+
+We’ll start by learning how to **select columns** from a data frame, just like choosing specific variables you care about.
+
+## Selecting Columns
+
+In base R, to select specific columns from a data frame, use the `[]` operator with the format: `data_frame[rows, columns]`.
+
+Example 1: Select specific columns from `colombia`
+
+```{r}
+colombia_selected <- colombia_data[,c("calendar_start_date", "calendar_end_date", "Year", "dengue_total")]
+
+```
+
+This creates a new data frame `colombia_selected` that keeps only those four columns.
+
+Example 2: Select all columns **except** some
+
+Let’s say you want to keep **everything except** the `UUID` and `IBGE_code` columns:
+
+```{r}
+# find all column names except the ones to remove
+columns_to_keep <- setdiff(names(colombia_data), c("UUID", "IBGE_code"))
+
+# subset the data frame
+colombia_fewer_columns <- colombia_data[ , columns_to_keep]
+```
+
+Now `colombia_fewer_columns` contains all the original columns **except** `UUID` and `IBGE_code`.
+
+## Filtering Rows
+
+Sometimes you only want to keep rows that meet a certain condition—for example, rows from a specific year or rows with a particular value in a column. Instead of using `dplyr::filter()`, you can use **basic R** subsetting with square brackets `[]`.
+
+Example 1: Keep rows from the year 2010 or later
+
+```{r}
+colombia_2010 <- colombia_data[colombia_data$Year >= 2010, ]
+```
+
+This keeps **all columns**, but **only the rows** where the `Year` is 2010 or greater.
+
+Example 2: Keep rows from 2010 or later **and** where resolution is `"Year"`
+
+If you want to apply **multiple conditions**, just combine them using `&` (and) or `|` (or).
+
+```{r}
+colombia_filtered <- colombia_data[colombia_data$Year >= 2010 & colombia_data$T_res == "Year", ]
+```
+
+Now `colombia_filtered` only keeps rows where:
+
+-   the year is 2010 or later
+
+-   and `T_res` is `"Year"`
+
+## Removing Rows with Missing Values
+
+It is very common that the raw datasets contain **missing values** (known in R as `NA`) in some columns. These indicate that there is no data available for those cells.
+
+For example, suppose we want to work only with rows in the `colombia` dataset where both `dengue_total` and `calendar_start_date` are not missing.
+
+What is `NA`?
+
+-   `NA` means "Not Available".
+
+-   You’ll see `NA` when values are missing in your data.
+
+-   R functions like `mean()` or `plot()` may return errors or warnings if you don’t handle these missing values first.
+
+### How to Check for Missing Values
+
+To check which values are missing in a column:
+
+```{r}
+#| eval: false
+# Check which values are missing in 'dengue_total'
+is.na(colombia_data$dengue_total)
+```
+
+```{r}
+#| eval: false
+# Check which values are NOT missing
+!is.na(colombia_data$dengue_total)
+```
+
+This gives you a logical vector (TRUE or FALSE) showing where the missing values are.
+
+### Filter Out Missing Values
+
+You can remove rows with missing values in a column by using logical indexing:
+
+```{r}
+# Keep only rows where dengue_total is not missing
+colombia_clean <- colombia_data[!is.na(colombia_data$dengue_total), ]
+```
+
+If you want to remove rows where **either** `dengue_total` or `calendar_start_date` is missing:
+
+```{r}
+colombia_clean2 <- colombia_data[!is.na(colombia_data$dengue_total) & !is.na(colombia_data$calendar_start_date), ]
+```
+
+This method keeps only the rows where **both** columns have valid (non-missing) data.
+
+## Creating New Columns
+
+Frequently, you will need to create a new column in your datasets based on the values in existing columns. For example, you may want to:
+
+-   Convert units (e.g., cases per 1000 people)
+
+-   Compute new ratios (e.g., dengue cases per week),
+
+-   Or just derive new information for analysis or plotting, etc
+
+Let’s learn how to do this using **basic R**.
+
+Example 1: Convert `dengue_total` to Dengue per Thousand
+
+```{r}
+colombia_data$dengue_per_1000 <- colombia_data$dengue_total / 1000
+```
+
+This adds a new column named `dengue_per_1000` to the `colombia` data frame.
+
+Example 2: Create a New Column Based on the One We Just Made
+
+Now let’s make another column that doubles the value we just created:
+
+```{r}
+colombia_data$dengue_per_1000_x2 <- colombia_data$dengue_per_1000 * 2
+```
+
+This creates a second new column that simply multiplies the `dengue_per_1000` column by 2.
+
+### Recap
+
+-   Use the `$` operator to create new columns in a data frame.
+
+-   You can add new columns on any existing ones.
+
+## Sorting data
+
+If we want to sort our data by one or more columns—for example, sorting by year or by total number of dengue cases, we can do this using the `order()` function. Here's how it works:
+
+### Sort one column in ascending order
+
+```{r}
+# Sort the dataframe by dengue_total in ascending order
+colombia_sorted <- colombia_data[order(colombia_data$dengue_total), ]
+```
+
+### Sort one column in descending order
+
+To sort in descending order, just put a minus `-` in front of the column inside `order()` (if it's numeric):
+
+```{r}
+# Sort the dataframe by dengue_total in descending order
+colombia_sorted_desc <- colombia_data[order(-colombia_data$dengue_total), ]
+```
+
+### Sort by multiple columns
+
+You can sort by more than one column by adding them to `order()` in the order of priority:
+
+```{r}
+# Sort by dengue_total (ascending), and then by Year (descending)
+colombia_sorted_multi <- colombia_data[order(colombia_data$dengue_total, -colombia_data$Year), ]
+
+```
+
+This means it will first sort by total dengue cases, and when there are ties, it will sort those rows by year from most recent to oldest.
+
+## Summarising Data
+
+Creating summaries of your data would be a good way to start describing the variable you are working with. Summary statistics are a good example of how one can summarize data.
+
+Let’s say we want to look at the average number of dengue cases (`dengue_total`) in the `colombia` dataset. We can use the `mean()` function in base R:
+
+```{r}
+# Calculate the average number of dengue cases
+mean(colombia_data$dengue_total, na.rm = TRUE)
+```
+
+We use `na.rm = TRUE` to ignore missing values (`NA`) when calculating the mean.
+
+### Frequency: Counting Values
+
+Another common summary task is counting how many times each category appears. For example, we can count how often each type of time resolution (`T_res`) appears:
+
+```{r}
+# Count the number of observations for each value of T_res
+table(colombia_data$T_res)
+```
+
+This will return the frequency of each unique value in the `T_res` column.
+
+To count combinations of two columns, like `T_res` and `full_name` (temporal and spatial resolution):
+
+```{r}
+# Count the number of observations for each combination of T_res and S_res
+table(colombia_data$T_res, colombia_data$full_name)
+```
+
+This will show a cross-tabulation of how many rows have each combination of `T_res` and `S_res`.

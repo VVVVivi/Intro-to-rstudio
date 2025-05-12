@@ -4,6 +4,7 @@ format:
   html:
     toc: true
     toc-location: left
+editor: visual
 ---
 
 ## Creating objects in R
@@ -24,9 +25,9 @@ However, to do useful and interesting things, we need to assign *values* to *obj
 weight_kg <- 55
 ```
 
-`<-` is the assignment operator. It assigns values on the right to objects on the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can be read as 3 **goes into** `x`.
+`<-` is the assignment operator. It assigns values on the right to objects on the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can be read as 3 **goes into** `x`.
 
-For historical reasons, you can also use `=` for assignments, but not in every context. Because of the [slight](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html) [differences](http://r.789695.n4.nabble.com/Is-there-any-difference-between-and-tp878594p878598.html) in syntax, it is good practice to always use `<-` for assignments.
+For historical reasons, you can also use `=` for assignments, but not in every context. Because of the [slight](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html) [differences](http://r.789695.n4.nabble.com/Is-there-any-difference-between-and-tp878594p878598.html) in syntax, it is good practice to always use `<-` for assignments.
 
 In RStudio, typing `Alt + -` (push Alt at the same time as the - key) will write `<-` in a single keystroke on a PC, while typing `Option + -` (Option and - key) does the same in a Mac.
 
@@ -34,7 +35,7 @@ Objects can be named like `x`, `current_temperature`, or `subject_id`.
 
 -   Be explicit and not too long
 
--   Not start with a number (e.g., `2x` is invalid, but `x2` is)
+-   Not start with a number (e.g., `2x` is invalid, but `x2` is)
 
 -   Be case-sensitive (e.g., `weight_kg` ≠ `Weight_kg`)
 
@@ -147,9 +148,6 @@ If we want to know what arguments it takes:
 args(round)
 ```
 
-```{r}
-?round
-```
 
 To round to a specific number of digits:
 
@@ -244,33 +242,27 @@ typeof(weight_g)
 typeof(animals)
 ```
 
-### Challenge
+### Exercise
 
 1.  Create a vector `height_mm` that contains the following heights of animals: 100, 150, 99, 87 in mm respectively.
 
-    ::: {.callout-note}
+    ::: {.callout-note collapse="true" title="Answer"}
     ```{r}
     height_mm <- c(100, 150, 99, 87)
     ```
     :::
 
-```{=html}
-<!-- -->
-```
 2.  What is the total height of these animals in mm? (*Hint:* use function `sum`)
 
-    ::: {.callout-note}
+    ::: {.callout-note collapse="true" title="Answer"}
     ```{r}
     sum(height_mm)
     ```
     :::
 
-```{=html}
-<!-- -->
-```
 3.  Another animal was measured and its height is 220 mm. Add this to the beginning of the vector `height_mm` and save the total height of the new set of animals in the `total_height` variable. What is the new `total_height`?
 
-    ::: {.callout-note}
+    ::: {.callout-note collapse="true" title="Answer"}
     ```{r}
     height_mm <- c(220, height_mm)
     total_height <- sum(height_mm)
@@ -299,7 +291,7 @@ more_animals
 
 R indices start at 1. Programming languages like Fortran, MATLAB, Julia, and R start counting at 1, because that’s what human beings typically do. Languages in the C family (including C++, Java, Perl, and Python) count from 0 because that’s simpler for computers to do.
 
-### **Conditional subsetting** 
+### **Conditional subsetting**
 
 Another common way of subsetting is by using a logical vector. `TRUE` will select the element with the same index, while `FALSE` will not:
 
@@ -331,17 +323,17 @@ weight_g[weight_g >= 30 & weight_g == 21]
 
 Note:
 
--    `<` means less than
+-   `<` means less than
 
--    `>` means greater than
+-   `>` means greater than
 
--    `>=` means greater than or equal to
+-   `>=` means greater than or equal to
 
--    `==` means equal to
+-   `==` means equal to
 
-The double equal sign `==` is a test for numerical equality between the left and right hand sides, and should not be confused with the single `=` sign, which performs variable assignment (similar to `<-`).
+The double equal sign `==` is a test for numerical equality between the left and right hand sides, and should not be confused with the single `=` sign, which performs variable assignment (similar to `<-`).
 
-A common task is to search for certain strings in a vector. One could use the “or” operator `|` to test for equality to multiple values, but this can quickly become tedious. The function `%in%` allows you to test if any of the elements of a search vector are found:
+A common task is to search for certain strings in a vector. One could use the “or” operator `|` to test for equality to multiple values, but this can quickly become tedious. The function `%in%` allows you to test if any of the elements of a search vector are found:
 
 ```{r}
 animals <- c("mouse", "rat", "dog", "cat")
@@ -392,19 +384,19 @@ heights[complete.cases(heights)]
 
 Recall that you can use the `typeof()` function to inspect an object’s type.
 
-### Exercise 
+### Exercise
 
 1.  Using this vector of heights in inches, create a new vector, `heights_no_na`, with the `NA`s removed.
-
-    ```{r}
+```{r}
     heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72, 65, 64, 70, 63, 65)
-    ```
+```
 
 2.  Use the function `median()` to calculate the median of the `heights` vector.
 
 3.  How many people in the set are taller than 67 inches?
 
-    ```{r}
+::: {.callout-note collapse="true" title="Answer"}
+```{r}
     heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72, 65, 64, 70, 63, 65)
 
     # 1.
@@ -420,4 +412,5 @@ Recall that you can use the `typeof()` function to inspect an object’s type.
     # 3.
     heights_above_67 <- heights_no_na[heights_no_na > 67]
     length(heights_above_67)
-    ```
+```
+:::
