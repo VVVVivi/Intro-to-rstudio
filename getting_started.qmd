@@ -188,8 +188,6 @@ You can find more shortcuts in this [RStudio cheatsheet about the RStudio IDE](h
 
 To check a variable or an object without saving it in your script, type the command directly in the console.
 
--   `Ctrl + 1` and `Ctrl + 2` can be used to jump between the script and console panes.
-
 When R is ready to accept a command, the console shows a `>` prompt. After running a command, it will return to `>` when ready.
 
 If you see a `+` prompt, it means R is still waiting for you to finish the command (e.g., due to an unclosed parenthesis or quote). You can press `Esc` to cancel the incomplete command.
@@ -198,7 +196,7 @@ If you see a `+` prompt, it means R is still waiting for you to finish the comma
 
 ## How to learn more after the workshop?
 
-The material we cover during this workshop will give you an initial taste of how you can use R to analyze data for your own research. However, you will need to learn more to do advanced operations such as cleaning your dataset, using statistical methods, or creating beautiful graphics.
+The material we cover during this sessoin will give you an initial taste of how you can use R to analyze data for your own research. However, you will need to learn more to do advanced operations such as cleaning your dataset, using statistical methods, or creating beautiful graphics.
 
 The best way to become proficient and efficient at R, as with any other tool, is to use it to address your actual research questions.
 
@@ -238,7 +236,7 @@ If you are looking for a function to do a particular task, you can use the `help
 
 ```{r}
 #| eval: false
-??kruskal
+??round
 ```
 
 If you still can’t find what you’re looking for, try:

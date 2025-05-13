@@ -29,7 +29,7 @@ weight_kg <- 55
 
 For historical reasons, you can also use `=` for assignments, but not in every context. Because of the [slight](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html) [differences](http://r.789695.n4.nabble.com/Is-there-any-difference-between-and-tp878594p878598.html) in syntax, it is good practice to always use `<-` for assignments.
 
-In RStudio, typing `Alt + -` (push Alt at the same time as the - key) will write `<-` in a single keystroke on a PC, while typing `Option + -` (Option and - key) does the same in a Mac.
+In RStudio, typing `Alt` + `-` (push Alt at the same time as the - key) will write `<-` in a single keystroke on a PC, while typing `Option` + `-` (Option and - key) does the same in a Mac.
 
 Objects can be named like `x`, `current_temperature`, or `subject_id`.
 
@@ -128,7 +128,7 @@ An example of a function call is:
 b <- sqrt(4)
 ```
 
-Here, the value of `4` is given to `sqrt()`, which returns the square root of `a`, and the result is assigned to `b`.
+Here, the value of `4` is given to `sqrt()`, which returns the square root of 4, and the result is assigned to `b`.
 
 The return value of a function can also be a set, list, or dataset—not just a single number.
 
@@ -147,7 +147,6 @@ If we want to know what arguments it takes:
 ```{r}
 args(round)
 ```
-
 
 To round to a specific number of digits:
 
@@ -240,6 +239,22 @@ Use `typeof()` to inspect:
 ```{r}
 typeof(weight_g)
 typeof(animals)
+```
+
+In **R**, a **vector can only contain elements of a single type**. When you try to combine elements of different types using a function like `c()`, R will automatically **coerce** them to the **least restrictive common type**. The hierarchy of coercion is roughly:
+
+`logical < integer < double (numeric) < character`
+
+For example:
+
+```{r}
+c(1, 2, 3, "1") # Returns "character"
+```
+
+If you want to store different types in a single object, you'd typically use a **list** instead:
+
+```{r}
+list(1, 2, 3, "1")
 ```
 
 ### Exercise
@@ -387,6 +402,7 @@ Recall that you can use the `typeof()` function to inspect an object’s type.
 ### Exercise
 
 1.  Using this vector of heights in inches, create a new vector, `heights_no_na`, with the `NA`s removed.
+
 ```{r}
     heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72, 65, 64, 70, 63, 65)
 ```

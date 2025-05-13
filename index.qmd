@@ -1,6 +1,7 @@
 ---
 title: "Introduction to RStudio for Public Health"
-author: Haowei(Vivi) Wang
+author: Haowei(Vivi) Wang 
+        haowei.wang18@imperial.ac.uk
 institute: Department of Infectious Disease Epidemiology, Imperial College London
 format:
   html:
@@ -14,7 +15,7 @@ format:
 
 This course is designed as an **introduction to R and RStudio for participants with no prior programming experience**. We will start from scratch by introducing how to start programming in R, read and write data, manipulate data, and visualize data by creating different plots — covering all the fundamental tasks needed to begin analyzing your own data.
 
-We will use **RStudio**, a powerful and user-friendly interface that makes developing R code much easier. During the course, we will also introduce you to the **tidyverse**, a collection of essential R packages including **dplyr** and **ggplot2** that simplify data manipulation and visualization.
+We will be using **RStudio**, a powerful and user-friendly interface that simplifies writing and developing R code. In this session, we’ll cover data types in R, perform basic operations and data manipulation, and introduce **ggplot2** for data visualization.
 
 # Target Audience
 
@@ -32,16 +33,15 @@ The course will cover the following sessions:
 
 1\. **Getting started**: Installing R and RStudio, understanding the RStudio environment.
 
-2\. **Introduction to R programming**: Basic operations, data types, writing scripts.
+2\. **Introduction to R Programming**: Basic operations, data types, writing scripts.
 
-3\. **Starting with data**: Reading, exploring, and saving datasets.
+3\. **Starting with Data**: Reading, exploring, and saving datasets.
 
-4\. **Data visualization with ggplot2**: Using `ggplot2` for creating publication-quality figures.
+4\. **Visualization with ggplot2**: Using `ggplot2` for creating publication-quality figures.
 
 # Data
 
-We will work with example datasets commonly used in public health, such as synthetic outbreak data and demographic datasets.\
-All data will be downloaded directly from within R during the sessions.
+We will work with example datasets commonly used in public health, including synthetic outbreak data and demographic information. All datasets will be accessed either from the `data/` folder in the GitHub repository (<https://github.com/VVVVivi/Intro-to-rstudio>) or downloaded directly within R during the sessions.
 
 # Setup Instructions
 
