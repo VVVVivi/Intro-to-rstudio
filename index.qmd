@@ -2,7 +2,7 @@
 title: "Introduction to RStudio for Public Health"
 author: 
   - name: Haowei (Vivi) Wang 
-  - email: haowei.wang18@imperial.ac.uk
+    email: haowei.wang18@imperial.ac.uk
 institute: Department of Infectious Disease Epidemiology, Imperial College London
 format:
   html:
