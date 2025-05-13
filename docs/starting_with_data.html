@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction to RStudio for Infectious Disease Modelling - Starting with Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Introduction to RStudio for Infectious Disease Modelling</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./getting_started.html"> 
+<span class="menu-text">Getting Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./intro_to_r.html"> 
+<span class="menu-text">Introduction to R Programming</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./starting_with_data.html" aria-current="page"> 
+<span class="menu-text">Starting with Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./visualization.html"> 
+<span class="menu-text">Visualization with ggplot2</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#understanding-data" id="toc-understanding-data" class="nav-link active" data-scroll-target="#understanding-data">Understanding Data</a>
+  <ul>
+  <li><a href="#reading-in-data-from-a-file" id="toc-reading-in-data-from-a-file" class="nav-link" data-scroll-target="#reading-in-data-from-a-file">Reading in data from a file</a></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames">Data frames</a>
+  <ul class="collapse">
+  <li><a href="#inspecting-data.frame-objects" id="toc-inspecting-data.frame-objects" class="nav-link" data-scroll-target="#inspecting-data.frame-objects">Inspecting <code>data.frame</code> Objects</a>
+  <ul class="collapse">
+  <li><a href="#check-the-size" id="toc-check-the-size" class="nav-link" data-scroll-target="#check-the-size">Check the Size</a></li>
+  <li><a href="#view-the-content" id="toc-view-the-content" class="nav-link" data-scroll-target="#view-the-content">View the Content</a></li>
+  <li><a href="#check-the-names" id="toc-check-the-names" class="nav-link" data-scroll-target="#check-the-names">Check the Names</a></li>
+  <li><a href="#get-a-quick-summary" id="toc-get-a-quick-summary" class="nav-link" data-scroll-target="#get-a-quick-summary">Get a Quick Summary</a></li>
+  </ul></li>
+  <li><a href="#indexing-and-subsetting-data-frames" id="toc-indexing-and-subsetting-data-frames" class="nav-link" data-scroll-target="#indexing-and-subsetting-data-frames">Indexing and Subsetting Data Frames</a>
+  <ul class="collapse">
+  <li><a href="#numeric-indexing" id="toc-numeric-indexing" class="nav-link" data-scroll-target="#numeric-indexing">Numeric Indexing</a></li>
+  <li><a href="#name-indexing" id="toc-name-indexing" class="nav-link" data-scroll-target="#name-indexing">Name Indexing</a></li>
+  <li><a href="#logical-indexing" id="toc-logical-indexing" class="nav-link" data-scroll-target="#logical-indexing">Logical indexing</a></li>
+  </ul></li>
+  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise</a></li>
+  </ul></li>
+  <li><a href="#working-with-factors" id="toc-working-with-factors" class="nav-link" data-scroll-target="#working-with-factors">Working with Factors</a>
+  <ul class="collapse">
+  <li><a href="#what-are-factors" id="toc-what-are-factors" class="nav-link" data-scroll-target="#what-are-factors">What are factors?</a></li>
+  <li><a href="#converting-factors" id="toc-converting-factors" class="nav-link" data-scroll-target="#converting-factors"><strong>Converting factors</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#data-manipulation" id="toc-data-manipulation" class="nav-link" data-scroll-target="#data-manipulation">Data Manipulation</a>
+  <ul>
+  <li><a href="#selecting-columns" id="toc-selecting-columns" class="nav-link" data-scroll-target="#selecting-columns">Selecting Columns</a></li>
+  <li><a href="#filtering-rows" id="toc-filtering-rows" class="nav-link" data-scroll-target="#filtering-rows">Filtering Rows</a></li>
+  <li><a href="#removing-rows-with-missing-values" id="toc-removing-rows-with-missing-values" class="nav-link" data-scroll-target="#removing-rows-with-missing-values">Removing Rows with Missing Values</a>
+  <ul class="collapse">
+  <li><a href="#how-to-check-for-missing-values" id="toc-how-to-check-for-missing-values" class="nav-link" data-scroll-target="#how-to-check-for-missing-values">How to Check for Missing Values</a></li>
+  <li><a href="#filter-out-missing-values" id="toc-filter-out-missing-values" class="nav-link" data-scroll-target="#filter-out-missing-values">Filter Out Missing Values</a></li>
+  </ul></li>
+  <li><a href="#creating-new-columns" id="toc-creating-new-columns" class="nav-link" data-scroll-target="#creating-new-columns">Creating New Columns</a>
+  <ul class="collapse">
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
+  </ul></li>
+  <li><a href="#sorting-data" id="toc-sorting-data" class="nav-link" data-scroll-target="#sorting-data">Sorting data</a>
+  <ul class="collapse">
+  <li><a href="#sort-one-column-in-ascending-order" id="toc-sort-one-column-in-ascending-order" class="nav-link" data-scroll-target="#sort-one-column-in-ascending-order">Sort one column in ascending order</a></li>
+  <li><a href="#sort-one-column-in-descending-order" id="toc-sort-one-column-in-descending-order" class="nav-link" data-scroll-target="#sort-one-column-in-descending-order">Sort one column in descending order</a></li>
+  <li><a href="#sort-by-multiple-columns" id="toc-sort-by-multiple-columns" class="nav-link" data-scroll-target="#sort-by-multiple-columns">Sort by multiple columns</a></li>
+  </ul></li>
+  <li><a href="#summarising-data" id="toc-summarising-data" class="nav-link" data-scroll-target="#summarising-data">Summarising Data</a>
+  <ul class="collapse">
+  <li><a href="#frequency-counting-values" id="toc-frequency-counting-values" class="nav-link" data-scroll-target="#frequency-counting-values">Frequency: Counting Values</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Starting with Data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="understanding-data" class="level1">
+<h1>Understanding Data</h1>
+<p>Before diving into analysis, it’s essential to first gain a clear understanding of your dataset. Proper data analysis starts with knowing what your data represents and how it is structured.</p>
+<section id="reading-in-data-from-a-file" class="level2">
+<h2 class="anchored" data-anchor-id="reading-in-data-from-a-file">Reading in data from a file</h2>
+<p>In this section, we will begin by examining an example dataset on dengue. To do this, we’ll start by loading the data into R and taking a closer look at its contents. We will use <code>read.csv()</code> to load into memory the content of the CSV file as an object of class <code>data.frame</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>colombia_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"National-level data_COLOMBIA_20021229_20221231.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This command won’t display anything on its own because the data is being assigned to a variable. To confirm that the data was loaded correctly, you can use <code>View</code> to check it out:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(colombia_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>we can alos just look at the first few rows using the <code>head()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(colombia_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  adm_0_name adm_1_name adm_2_name full_name ISO_A0 FAO_GAUL_code RNE_iso_code
+1   COLOMBIA         NA         NA  COLOMBIA    COL            54          COL
+2   COLOMBIA         NA         NA  COLOMBIA    COL            54          COL
+3   COLOMBIA         NA         NA  COLOMBIA    COL            54          COL
+4   COLOMBIA         NA         NA  COLOMBIA    COL            54          COL
+5   COLOMBIA         NA         NA  COLOMBIA    COL            54          COL
+6   COLOMBIA         NA         NA  COLOMBIA    COL            54          COL
+  IBGE_code calendar_start_date calendar_end_date Year dengue_total
+1        NA          2002-12-29        2003-12-27 2002          382
+2        NA          2004-01-04        2005-01-01 2004         1614
+3        NA          2005-01-02        2005-12-31 2005         1938
+4        NA          2006-01-01        2006-12-30 2006         1667
+5        NA          2006-12-31        2007-12-29 2006         3257
+6        NA          2006-12-31        2007-01-06 2006          661
+  case_definition_standardised  S_res T_res                    UUID
+1                        Total Admin0  Year     MOH-COL-2005-Y01-00
+2                        Total Admin0  Year     MOH-COL-2005-Y01-00
+3                        Total Admin0  Year     MOH-COL-2005-Y01-00
+4                        Total Admin0  Year     MOH-COL-2006-Y01-01
+5                        Total Admin0  Year     MOH-COL-2008-Y01-02
+6                        Total Admin0  Week MOH-COL-20072022-Y02-00</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Note</strong></p>
+<p>The <code>read.csv()</code> function assumes that values are separated by commas. However, in some regions, commas are used as decimal marks and semicolons (<code>;</code>) are used instead to separate fields. In such cases, you should use <code>read.csv2()</code>, which works similarly but expects different separators.</p>
+<p>If your data uses another format, you can customize separators manually. For example, the more general <code>read.table()</code> function allows you to define both the field separator and other options. To learn more, type <code>?read.csv</code> in your R console.</p>
+<p>For tab-separated files, <code>read.delim()</code> is another helpful function. All of these are actually shortcuts to <code>read.table()</code> with preset options. For instance, the same data can be loaded using: <code>colombia_data &lt;- read.table(file = "datat/National-level data_COLOMBIA_20021229_20221231.csv", sep = ",", header = TRUE)</code></p>
+<p>Just remember to set <code>header = TRUE</code> if your file contains column names, since <code>read.table()</code> assumes otherwise by default.</p>
+</blockquote>
+</section>
+<section id="data-frames" class="level2">
+<h2 class="anchored" data-anchor-id="data-frames">Data frames</h2>
+<p>In R, data frames are one of the most commonly used data structures. They are extremely useful because many real-world datasets come in table format, which aligns well with how data frames organize information. In fact, data frames are the standard format for most data manipulation, plotting, and analysis tasks in R.</p>
+<p>A data frame stores data in a tabular layout where each column is a vector of the same length. Each column can hold only one type of data (e.g., numeric, character, or logical), but different columns can hold different types. For example, one column might contain numbers, another column text, and another logical values like <code>TRUE</code> or <code>FALSE</code>.</p>
+<p>Below is an illustration showing a simple data frame with three rows and three columns: one numeric, one character, and one logical:</p>
+<p><img src="images/data_frame_structure.png" class="img-fluid" width="366"></p>
+<p>To explore the structure of a data frame in R, you can use the <code>str()</code> function. This gives you a quick overview of column names, data types, and a preview of values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(colombia_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   844 obs. of  16 variables:
+ $ adm_0_name                  : chr  "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" ...
+ $ adm_1_name                  : logi  NA NA NA NA NA NA ...
+ $ adm_2_name                  : logi  NA NA NA NA NA NA ...
+ $ full_name                   : chr  "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" ...
+ $ ISO_A0                      : chr  "COL" "COL" "COL" "COL" ...
+ $ FAO_GAUL_code               : int  54 54 54 54 54 54 54 54 54 54 ...
+ $ RNE_iso_code                : chr  "COL" "COL" "COL" "COL" ...
+ $ IBGE_code                   : logi  NA NA NA NA NA NA ...
+ $ calendar_start_date         : chr  "2002-12-29" "2004-01-04" "2005-01-02" "2006-01-01" ...
+ $ calendar_end_date           : chr  "2003-12-27" "2005-01-01" "2005-12-31" "2006-12-30" ...
+ $ Year                        : int  2002 2004 2005 2006 2006 2006 2007 2007 2007 2007 ...
+ $ dengue_total                : int  382 1614 1938 1667 3257 661 3602 611 490 440 ...
+ $ case_definition_standardised: chr  "Total" "Total" "Total" "Total" ...
+ $ S_res                       : chr  "Admin0" "Admin0" "Admin0" "Admin0" ...
+ $ T_res                       : chr  "Year" "Year" "Year" "Year" ...
+ $ UUID                        : chr  "MOH-COL-2005-Y01-00" "MOH-COL-2005-Y01-00" "MOH-COL-2005-Y01-00" "MOH-COL-2006-Y01-01" ...</code></pre>
+</div>
+</div>
+<section id="inspecting-data.frame-objects" class="level3">
+<h3 class="anchored" data-anchor-id="inspecting-data.frame-objects">Inspecting <code>data.frame</code> Objects</h3>
+<p>Before we start analysing the data, it’s a good idea to take a quick look to understand what we’re working with. We also want to make sure our data has loaded correctly into R.</p>
+<p>We’ve already seen a few helpful functions like <code>head()</code>, <code>view()</code>, and <code>str()</code> that give us a quick look at the contents and structure of a data frame. Here are some other basic functions that can help us explore our data:’</p>
+<section id="check-the-size" class="level4">
+<h4 class="anchored" data-anchor-id="check-the-size">Check the Size</h4>
+<ul>
+<li><p><code>dim(data)</code> — tells you the number of rows and columns.</p></li>
+<li><p><code>nrow(data)</code> — gives you the number of rows.</p></li>
+<li><p><code>ncol(data)</code> — gives you the number of columns.</p></li>
+</ul>
+</section>
+<section id="view-the-content" class="level4">
+<h4 class="anchored" data-anchor-id="view-the-content">View the Content</h4>
+<ul>
+<li><p><code>head(data)</code> — shows the first few rows (default is 6).</p></li>
+<li><p><code>tail(data)</code> — shows the last few rows.</p></li>
+</ul>
+</section>
+<section id="check-the-names" class="level4">
+<h4 class="anchored" data-anchor-id="check-the-names">Check the Names</h4>
+<ul>
+<li><p><code>names(data)</code> — shows the column names.</p></li>
+<li><p><code>rownames(data)</code> — shows the row names (usually just numbers).</p></li>
+</ul>
+</section>
+<section id="get-a-quick-summary" class="level4">
+<h4 class="anchored" data-anchor-id="get-a-quick-summary">Get a Quick Summary</h4>
+<ul>
+<li><p><code>str(data)</code> — gives an overview of the data frame: column names, data types, and a preview of values.</p></li>
+<li><p><code>summary(data)</code> — provides basic statistics (like min, max, mean) for each column.</p></li>
+</ul>
+<p>Note: Most of these functions also work with other types of objects, not just <code>data.frame</code>.</p>
+</section>
+</section>
+<section id="indexing-and-subsetting-data-frames" class="level3">
+<h3 class="anchored" data-anchor-id="indexing-and-subsetting-data-frames">Indexing and Subsetting Data Frames</h3>
+<section id="numeric-indexing" class="level4">
+<h4 class="anchored" data-anchor-id="numeric-indexing">Numeric Indexing</h4>
+<p>A data frame in R is like a table with rows and columns. To look at specific values inside this table, we use numbers to show the position of each item.</p>
+<p>To get data from a certain row and column, we use square brackets like this: <code>data[row, column]</code>. For example, <code>[2,3]</code> means row 2, column 3.</p>
+<p><strong>Important:</strong> <code>[]</code> are for accessing data. <code>()</code> are for calling functions like <code>mean()</code> or <code>summary()</code>.</p>
+<p>Let’s look at a few more examples of how to select parts of a data frame using numbers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the value in the 1st row and 1st column</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>colombia_data[<span class="dv">1</span>, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "COLOMBIA"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the value in the 1st row and 6th column</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>colombia_data[<span class="dv">1</span>, <span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 54</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the entire 1st column as a vector</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>colombia_data[, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+  [7] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [13] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [19] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [25] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [31] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [37] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [43] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [49] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [55] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [61] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [67] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [73] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [79] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [85] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [91] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+ [97] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[103] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[109] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[115] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[121] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[127] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[133] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[139] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[145] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[151] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[157] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[163] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[169] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[175] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[181] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[187] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[193] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[199] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[205] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[211] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[217] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[223] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[229] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[235] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[241] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[247] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[253] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[259] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[265] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[271] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[277] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[283] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[289] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[295] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[301] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[307] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[313] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[319] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[325] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[331] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[337] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[343] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[349] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[355] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[361] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[367] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[373] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[379] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[385] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[391] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[397] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[403] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[409] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[415] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[421] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[427] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[433] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[439] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[445] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[451] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[457] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[463] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[469] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[475] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[481] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[487] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[493] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[499] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[505] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[511] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[517] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[523] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[529] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[535] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[541] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[547] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[553] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[559] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[565] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[571] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[577] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[583] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[589] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[595] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[601] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[607] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[613] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[619] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[625] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[631] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[637] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[643] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[649] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[655] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[661] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[667] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[673] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[679] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[685] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[691] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[697] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[703] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[709] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[715] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[721] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[727] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[733] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[739] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[745] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[751] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[757] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[763] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[769] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[775] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[781] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[787] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[793] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[799] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[805] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[811] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[817] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[823] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[829] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[835] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"
+[841] "COLOMBIA" "COLOMBIA" "COLOMBIA" "COLOMBIA"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the first 3 values from the 7th column</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>colombia_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "COL" "COL" "COL"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the entire 3rd row as a data frame</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>colombia_data[<span class="dv">3</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  adm_0_name adm_1_name adm_2_name full_name ISO_A0 FAO_GAUL_code RNE_iso_code
+3   COLOMBIA         NA         NA  COLOMBIA    COL            54          COL
+  IBGE_code calendar_start_date calendar_end_date Year dengue_total
+3        NA          2005-01-02        2005-12-31 2005         1938
+  case_definition_standardised  S_res T_res                UUID
+3                        Total Admin0  Year MOH-COL-2005-Y01-00</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the first 6 rows (just like the head() function)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>head_colombia <span class="ot">&lt;-</span> colombia_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>:</code> operator helps you create a sequence of numbers. For example:</p>
+<ul>
+<li><p><code>1:10</code> gives you numbers from 1 to 10</p></li>
+<li><p><code>10:1</code> gives you numbers from 10 to 1</p></li>
+</ul>
+<p>You can also leave out (exclude) parts of a data frame using the minus <code>-</code> sign:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># all columns except the first one</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>colombia_data[, <span class="sc">-</span><span class="dv">1</span>]  </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># similar to head(colombia), keeps only rows 1 to 6</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>colombia_data[<span class="sc">-</span>(<span class="dv">7</span><span class="sc">:</span><span class="dv">34786</span>), ]     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="name-indexing" class="level4">
+<h4 class="anchored" data-anchor-id="name-indexing">Name Indexing</h4>
+<p>Instead of using numbers to access rows and columns, we can also use the names of the columns directly. This is called <strong>name indexing</strong>.</p>
+<p>Here are a few examples using the <code>colombia</code> data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the "value" column as a vector</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>colombia_data[, <span class="st">"dengue_total"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  382 1614 1938 1667 3257  661 3602  611  490  440  775  623  922  621  629
+ [16]  727  731 1005  589  902 1192 1213  589 1141 1041 1017  800  629  657 1056
+ [31] 1041 1005  967  766  812  657  896  905  776  822  790  840 1153  752  720
+ [46]  584  692  787  668  696  696  834  736  685 1104  591  410  528  709  868
+ [61]  862  840  821  790  844  828  740  732  598  593  654  743  715  672  679
+ [76]  619  715  706  680  614  750  727  706  611  709  736  696  689  672  588
+ [91]  572  559  574  632  592  622  664  661  693  727  785  789  735  742  690
+[106]  561  741  674  676  484  414  711  697  695  639  725  673  670  622  756
+[121]  612  635  610  687  628  718  771  672  670  769  858  838  975  926  882
+[136]  866  962 1001 1032 1058 1082 1108 1128 1148 1169 1225 1197 1156 1258 1240
+[151] 1193 1226 1278 1149 1254 1217 1335 1469 1546 1688 1537 1478 1507 5010 2177
+[166] 2457 2697 3099 3713 4229 4509 4308 4782 4569 4927 4400 4577 4874 4466 4824
+[181] 4600 4496 4771 4785 4511 4395 4374 4244 3892 3632 3494 3181 3287 3012 3028
+[196] 2648 2600 2456 2326 2085 1831 1773 1550 1511 1427 1296 1143 1167 1081 1010
+[211]  906  897  944  835  739  720 1255  759  795  741  660  673  553  603  527
+[226]  545  526  470  480  530  519  494  530  591  584  590  617  622  626  640
+[241]  634  605  549  652  560  546  509  550  520  523  455  571  486  483  507
+[256]  513  470  480  524  552  540  544  569  597  599  632  648  688  697 1448
+[271]  905 1002 1033 1018 1063 1005 1019  948  950  994  953 1170 1136 1292 1375
+[286] 1345 1448 1689  981  802  813  849  895  909  915  909 1061 1009 1004  869
+[301]  920  742  795  929  986 1147 1111 1080 1018  951  902  950  902 1053  967
+[316] 1052 1061 1174 1129 1232 1283 1283 1151 1765 1773 1917 1932 2060 2108 2189
+[331] 2146 2050 2070 3084 3279 2924 2939 2877 2866 3109 3005 2763 2798 2844 2605
+[346] 3056 3002 3013 2703 2435 2366 2167 2292 2048 2101 2204 2231 2260 2292 2212
+[361] 2404 2370 2291 2183 2469 2528 2218 2276 2311 1964 1789 2362 2046 2001 2670
+[376] 2467 2338 2434 2079 2054 2014 2010 1742 1793 1884 1819 1743 2098 1839 1729
+[391] 1878 1844 1816 1812 1974 1707 2011 2104 1724 2087 2149 2091 2100 2025 1836
+[406] 1879 1912 1746 1869 2122 2173 2090 2149 2148 2236 2416 2207 2114 2131 2024
+[421] 1849 2068 2139 2081 2038 2464 1821 2115 1366 1460 1738 1934 2245 2184 2493
+[436] 2388 1992 1930 1839 2106 1977 2085 1921 2015 1967 1732 1688 2116 1807 1757
+[451] 1924 1877 1850 1743 1717 1667 1507 1526 1454 1585 1577 1431 1374 1360 1280
+[466] 1361 1416 1585 1664 1732 1719 1724 1917 2149 2271 2259 2457 2313 2547 2890
+[481] 2630 2179 2938 2422 2844 2559 1589 1486 1528 1126  928  832  812 2762 2981
+[496] 1920 3115 1577 3289 3180 3007 2661 2906 2244 1035 2440  924 2658 2491 2544
+[511] 2699 2578 2543 2394 2192 1971 2040 1622 1395 1322 1210 1149  808 1081  930
+[526]  930  960  939  945  872  900  651  518  466  487  403  475  501  483  439
+[541]  434  452  386  417  482  396  812  816  459  510  496  435  431  432  756
+[556]  691  629  477  483  465  404  419  476  432  430  466  526  505  450  508
+[571]  453  416  481  413  385  468  402  392  366  419  411  481  463  455  426
+[586]  533  452  425  458  403  411  530  488  416  432  477  493 1269 1491  515
+[601]  409  897  383  578  855  330 1332 1582 1227  808  683 1585  797  759 1587
+[616]  914  870  886  911  917 1748  734  887 1055  821  884 1163 1207  914  931
+[631]  906 1447  876  933 1016 1655 1634 2633 3195 3077 1631 2822 1678 2647 1747
+[646] 1840 1669 1669 2287 1860 2286 1830 2347 1832 2625 1919 2523 1799 2398 1853
+[661] 2376 2022 2150 3074 1957 2698 2292 2353 2239 2536 2344 2522 2447 2566 2873
+[676] 2819 2876 2679 2957 2672 2525 3038 2780 2887 2832 3578 2678 3099 3431  639
+[691]  623 3622  647 3452  636 3650  698 3709  632 3428  631 3223  634 3145  702
+[706] 3237  680 2880 1331 1841 1701 1063 1684  910 1609 1037 1582  894 1561  749
+[721] 1450  685 1474  714 1499 1435  659 1230  623 1061  668  672  670  790  687
+[736]  661  644  726  661  711  658  673  626 1576  669 1398  671  582  677  594
+[751]  698  622  687  629  718  632  600  690  571  619  687  551  796  527  574
+[766]  774  570  844  515  899  488 1012  504 1146  568 1138  595 1347  589 1411
+[781]  647 1479 1604 1518 1595 1855 1985 1743 2172 1951 1777 1655 1074 1540  931
+[796]  946 1494  844 1590  931  957  829  784 1709  834  841  839 1697  904 1675
+[811]  985 1603  924 1643 1394  880 1565 1115 1561 1134 1239 1398 1422 1548 1553
+[826] 1443 1268 1267 1366 1306 1299 1472 1324 1488 1367 1161 1325 1405 1337 1728
+[841] 1270 1253 1520 1776</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this does the same thing</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>colombia_data<span class="sc">$</span>dengue_total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the "Country" and "value" columns for the first three rows</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (this mixes row numbers with column names)</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>colombia_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"dengue_total"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Year dengue_total
+1 2002          382
+2 2004         1614
+3 2005         1938</code></pre>
+</div>
+</div>
+<p>In RStudio, you can use the <strong>Tab key</strong> to auto-complete column names, which helps avoid typos.</p>
+</section>
+<section id="logical-indexing" class="level4">
+<h4 class="anchored" data-anchor-id="logical-indexing">Logical indexing</h4>
+<p>Sometimes we want to look at rows in our dataset that match a specific condition. This is called <strong>logical indexing</strong>. In R, we can use conditions to select the rows that meet our criteria.</p>
+<p>Here’s how we can find and work with records where the year is 2007 in our dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get all the records where Year is 2007 and save those records into a new data frame</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>year_2007_data <span class="ot">&lt;-</span> colombia_data[colombia_data<span class="sc">$</span>Year <span class="sc">==</span> <span class="dv">2007</span>, ]</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># count how many records are from the year 2007</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(year_2007_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 53</code></pre>
+</div>
+</div>
+<p>This method is helpful when you want to focus only on specific parts of your data — for example, all data points from a certain year, a certain region, or with a certain status.</p>
+</section>
+</section>
+<section id="exercise" class="level3">
+<h3 class="anchored" data-anchor-id="exercise">Exercise</h3>
+<p>Let’s try a few short tasks to help you explore how to work with rows in your dataset.</p>
+<ol type="1">
+<li><p><strong>Create a new data frame</strong> that only includes row 200 from your dataset. Name it <code>data_200</code>.</p></li>
+<li><p><strong>Use <code>nrow()</code> to find how many rows</strong> are in your dataset. Then:</p>
+<ul>
+<li>Pull out the <strong>last row</strong> using that number.</li>
+<li>Use <code>tail()</code> to check the result.</li>
+<li>Save the last row into a new data frame named <code>data_last</code>.</li>
+</ul></li>
+<li><p><strong>Find the middle row</strong> (the one halfway through the dataset). Save it in an object called <code>data_middle</code>.</p></li>
+<li><p>Use <strong>negative indexing</strong> with <code>nrow()</code> to create a new object that keeps only the <strong>first six rows</strong> (like using <code>head()</code>).</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Answer">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Get the 200th row</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>data_200 <span class="ot">&lt;-</span> colombia_data[<span class="dv">200</span>, ]</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Use nrow() to get total number of rows</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>n_rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(colombia_data)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract last row using total number of rows</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>data_last <span class="ot">&lt;-</span> colombia_data[n_rows, ]</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: verify it looks correct</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(colombia_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    adm_0_name adm_1_name adm_2_name full_name ISO_A0 FAO_GAUL_code
+839   COLOMBIA         NA         NA  COLOMBIA    COL            54
+840   COLOMBIA         NA         NA  COLOMBIA    COL            54
+841   COLOMBIA         NA         NA  COLOMBIA    COL            54
+842   COLOMBIA         NA         NA  COLOMBIA    COL            54
+843   COLOMBIA         NA         NA  COLOMBIA    COL            54
+844   COLOMBIA         NA         NA  COLOMBIA    COL            54
+    RNE_iso_code IBGE_code calendar_start_date calendar_end_date Year
+839          COL        NA          2022-09-04        2022-09-10 2022
+840          COL        NA          2022-11-13        2022-11-19 2022
+841          COL        NA          2022-09-18        2022-09-24 2022
+842          COL        NA          2022-09-25        2022-10-01 2022
+843          COL        NA          2022-11-06        2022-11-12 2022
+844          COL        NA          2022-12-04        2022-12-10 2022
+    dengue_total case_definition_standardised  S_res T_res                UUID
+839         1337                        Total Admin0  Week MOH-COL-2022-Y02-05
+840         1728                        Total Admin0  Week MOH-COL-2022-Y02-05
+841         1270                        Total Admin0  Week MOH-COL-2022-Y02-05
+842         1253                        Total Admin0  Week MOH-COL-2022-Y02-05
+843         1520                        Total Admin0  Week MOH-COL-2022-Y02-05
+844         1776                        Total Admin0  Week MOH-COL-2022-Y02-05</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Get the middle row</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>data_middle <span class="ot">&lt;-</span> colombia_data[n_rows<span class="sc">/</span><span class="dv">2</span>, ]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Keep only the first 6 rows (remove rows 7 to the end)</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>data_head <span class="ot">&lt;-</span> colombia_data[<span class="sc">-</span>(<span class="dv">7</span><span class="sc">:</span>n_rows), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="working-with-factors" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-factors">Working with Factors</h2>
+<p>In our dataset, some columns like <code>T_res</code> (which shows if the data is recorded by week or year) look like text, but they actually represent categories. These kinds of columns are good candidates for <code>factor</code> in R.</p>
+<section id="what-are-factors" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-factors">What are factors?</h3>
+<p>Factors are a special type in R used for <strong>categorical data</strong> — data that has a fixed set of possible values (called <em>levels</em>). For example, <code>T_res</code> only includes <code>"Week"</code> and <code>"Year"</code>, and these are its levels.</p>
+<p>By turning this column into a factor, we can make our data cleaner and often easier to analyze or visualize.</p>
+<p>We can convert these columns that contain categorical data to type factor by using the <code>factor()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>colombia_data<span class="sc">$</span>T_res <span class="ot">&lt;-</span> <span class="fu">factor</span>(colombia_data<span class="sc">$</span>T_res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To check that it worked, we can use the <code>summary()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(colombia_data<span class="sc">$</span>T_res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Week Year 
+ 835    9 </code></pre>
+</div>
+</div>
+<p>By default, R always sorts levels in alphabetical order. For instance, if you have a factor with 2 levels:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"female"</span>, <span class="st">"male"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>R will assign <code>1</code> to the level <code>"female"</code> and <code>2</code> to the level <code>"male"</code> (because <code>f</code> comes before <code>m</code>, even though the first element in this vector is <code>"male"</code>). You can see this by using the function <code>levels()</code> and you can find the number of levels using <code>nlevels()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "female" "male"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlevels</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>Sometimes, the order of the factors does not matter, other times you might want to specify the order because it is meaningful (e.g., “low”, “medium”, “high”), it improves your visualization, or it is required by a particular type of analysis. Here, one way to reorder our levels in the <code>sex</code> vector would be:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sex <span class="co"># current order</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] male   female female male  
+Levels: female male</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>))</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sex <span class="co"># after re-ordering</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] male   female female male  
+Levels: male female</code></pre>
+</div>
+</div>
+<p>In R’s memory, these factors are represented by integers (1, 2, 3), but are more informative than integers because factors are self describing: <code>"female"</code>, <code>"male"</code> is more descriptive than <code>1</code>, <code>2</code>. Which one is “male”? You wouldn’t be able to tell just from the integer data. Factors, on the other hand, have this information built in. It is particularly helpful when there are many levels (like the species names in our example dataset).</p>
+</section>
+<section id="converting-factors" class="level3">
+<h3 class="anchored" data-anchor-id="converting-factors"><strong>Converting factors</strong></h3>
+<p>If you need to convert a factor to a character vector, you use <code>as.character(x)</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "male"   "female" "female" "male"  </code></pre>
+</div>
+</div>
+<p>In some cases, you may have to convert factors where the levels appear as numbers (such as concentration levels or years) to a numeric vector. For instance, in one part of your analysis the years might need to be encoded as factors (e.g., comparing average weights across years) but in another part of your analysis they may need to be stored as numeric values (e.g., doing math operations on the years). This conversion from factor to numeric is a little trickier. The <code>as.numeric()</code> function returns the index values of the factor, not its levels, so it will result in an entirely new (and unwanted in this case) set of numbers. One method to avoid this is to convert factors to characters, and then to numbers.</p>
+<p>Another method is to use the <code>levels()</code> function. Compare:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>year_fct <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1983</span>, <span class="dv">1977</span>, <span class="dv">1998</span>, <span class="dv">1990</span>))</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(year_fct)               <span class="co"># Wrong! And there is no warning...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 2 1 4 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">as.character</span>(year_fct)) <span class="co"># Works...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1990 1983 1977 1998 1990</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">levels</span>(year_fct))[year_fct]    <span class="co"># The recommended way.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1990 1983 1977 1998 1990</code></pre>
+</div>
+</div>
+<p>Notice that in the <code>levels()</code> approach, three important steps occur:</p>
+<ul>
+<li><p>We obtain all the factor levels using <code>levels(year_fct)</code>.</p></li>
+<li><p>We convert these levels to numeric values using <code>as.numeric(levels(year_fct))</code>.</p></li>
+<li><p>We then access these numeric values using the underlying integers of the vector <code>year_fct</code> inside the square brackets.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="data-manipulation" class="level1">
+<h1>Data Manipulation</h1>
+<p>Sometimes, your dataset isn’t in the shape you need for plotting or analysis. In this section, we’ll learn how to <strong>manipulate data</strong> using only <strong>basic R commands</strong>—no extra packages needed.</p>
+<p>We’ll start by learning how to <strong>select columns</strong> from a data frame, just like choosing specific variables you care about.</p>
+<section id="selecting-columns" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-columns">Selecting Columns</h2>
+<p>In base R, to select specific columns from a data frame, use the <code>[]</code> operator with the format: <code>data_frame[rows, columns]</code>.</p>
+<p>Example 1: Select specific columns from <code>colombia</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>colombia_selected <span class="ot">&lt;-</span> colombia_data[,<span class="fu">c</span>(<span class="st">"calendar_start_date"</span>, <span class="st">"calendar_end_date"</span>, <span class="st">"Year"</span>, <span class="st">"dengue_total"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This creates a new data frame <code>colombia_selected</code> that keeps only those four columns.</p>
+<p>Example 2: Select all columns <strong>except</strong> some</p>
+<p>Let’s say you want to keep <strong>everything except</strong> the <code>UUID</code> and <code>IBGE_code</code> columns:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># find all column names except the ones to remove</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>columns_to_keep <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(colombia_data), <span class="fu">c</span>(<span class="st">"UUID"</span>, <span class="st">"IBGE_code"</span>))</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset the data frame</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>colombia_fewer_columns <span class="ot">&lt;-</span> colombia_data[ , columns_to_keep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now <code>colombia_fewer_columns</code> contains all the original columns <strong>except</strong> <code>UUID</code> and <code>IBGE_code</code>.</p>
+</section>
+<section id="filtering-rows" class="level2">
+<h2 class="anchored" data-anchor-id="filtering-rows">Filtering Rows</h2>
+<p>Sometimes you only want to keep rows that meet a certain condition—for example, rows from a specific year or rows with a particular value in a column. Instead of using <code>dplyr::filter()</code>, you can use <strong>basic R</strong> subsetting with square brackets <code>[]</code>.</p>
+<p>Example 1: Keep rows from the year 2010 or later</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>colombia_2010 <span class="ot">&lt;-</span> colombia_data[colombia_data<span class="sc">$</span>Year <span class="sc">&gt;=</span> <span class="dv">2010</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This keeps <strong>all columns</strong>, but <strong>only the rows</strong> where the <code>Year</code> is 2010 or greater.</p>
+<p>Example 2: Keep rows from 2010 or later <strong>and</strong> where resolution is <code>"Year"</code></p>
+<p>If you want to apply <strong>multiple conditions</strong>, just combine them using <code>&amp;</code> (and) or <code>|</code> (or).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>colombia_filtered <span class="ot">&lt;-</span> colombia_data[colombia_data<span class="sc">$</span>Year <span class="sc">&gt;=</span> <span class="dv">2010</span> <span class="sc">&amp;</span> colombia_data<span class="sc">$</span>T_res <span class="sc">==</span> <span class="st">"Year"</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now <code>colombia_filtered</code> only keeps rows where:</p>
+<ul>
+<li><p>the year is 2010 or later</p></li>
+<li><p>and <code>T_res</code> is <code>"Year"</code></p></li>
+</ul>
+</section>
+<section id="removing-rows-with-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="removing-rows-with-missing-values">Removing Rows with Missing Values</h2>
+<p>It is very common that the raw datasets contain <strong>missing values</strong> (known in R as <code>NA</code>) in some columns. These indicate that there is no data available for those cells.</p>
+<p>For example, suppose we want to work only with rows in the <code>colombia</code> dataset where both <code>dengue_total</code> and <code>calendar_start_date</code> are not missing.</p>
+<p>What is <code>NA</code>?</p>
+<ul>
+<li><p><code>NA</code> means “Not Available”.</p></li>
+<li><p>You’ll see <code>NA</code> when values are missing in your data.</p></li>
+<li><p>R functions like <code>mean()</code> or <code>plot()</code> may return errors or warnings if you don’t handle these missing values first.</p></li>
+</ul>
+<section id="how-to-check-for-missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-check-for-missing-values">How to Check for Missing Values</h3>
+<p>To check which values are missing in a column:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check which values are missing in 'dengue_total'</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(colombia_data<span class="sc">$</span>dengue_total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check which values are NOT missing</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span><span class="fu">is.na</span>(colombia_data<span class="sc">$</span>dengue_total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This gives you a logical vector (TRUE or FALSE) showing where the missing values are.</p>
+</section>
+<section id="filter-out-missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="filter-out-missing-values">Filter Out Missing Values</h3>
+<p>You can remove rows with missing values in a column by using logical indexing:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only rows where dengue_total is not missing</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>colombia_clean <span class="ot">&lt;-</span> colombia_data[<span class="sc">!</span><span class="fu">is.na</span>(colombia_data<span class="sc">$</span>dengue_total), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you want to remove rows where <strong>either</strong> <code>dengue_total</code> or <code>calendar_start_date</code> is missing:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>colombia_clean2 <span class="ot">&lt;-</span> colombia_data[<span class="sc">!</span><span class="fu">is.na</span>(colombia_data<span class="sc">$</span>dengue_total) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(colombia_data<span class="sc">$</span>calendar_start_date), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This method keeps only the rows where <strong>both</strong> columns have valid (non-missing) data.</p>
+</section>
+</section>
+<section id="creating-new-columns" class="level2">
+<h2 class="anchored" data-anchor-id="creating-new-columns">Creating New Columns</h2>
+<p>Frequently, you will need to create a new column in your datasets based on the values in existing columns. For example, you may want to:</p>
+<ul>
+<li><p>Convert units (e.g., cases per 1000 people)</p></li>
+<li><p>Compute new ratios (e.g., dengue cases per week),</p></li>
+<li><p>Or just derive new information for analysis or plotting, etc</p></li>
+</ul>
+<p>Let’s learn how to do this using <strong>basic R</strong>.</p>
+<p>Example 1: Convert <code>dengue_total</code> to Dengue per Thousand</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>colombia_data<span class="sc">$</span>dengue_per_1000 <span class="ot">&lt;-</span> colombia_data<span class="sc">$</span>dengue_total <span class="sc">/</span> <span class="dv">1000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This adds a new column named <code>dengue_per_1000</code> to the <code>colombia</code> data frame.</p>
+<p>Example 2: Create a New Column Based on the One We Just Made</p>
+<p>Now let’s make another column that doubles the value we just created:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>colombia_data<span class="sc">$</span>dengue_per_1000_x2 <span class="ot">&lt;-</span> colombia_data<span class="sc">$</span>dengue_per_1000 <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This creates a second new column that simply multiplies the <code>dengue_per_1000</code> column by 2.</p>
+<section id="recap" class="level3">
+<h3 class="anchored" data-anchor-id="recap">Recap</h3>
+<ul>
+<li><p>Use the <code>$</code> operator to create new columns in a data frame.</p></li>
+<li><p>You can add new columns on any existing ones.</p></li>
+</ul>
+</section>
+</section>
+<section id="sorting-data" class="level2">
+<h2 class="anchored" data-anchor-id="sorting-data">Sorting data</h2>
+<p>If we want to sort our data by one or more columns—for example, sorting by year or by total number of dengue cases, we can do this using the <code>order()</code> function. Here’s how it works:</p>
+<section id="sort-one-column-in-ascending-order" class="level3">
+<h3 class="anchored" data-anchor-id="sort-one-column-in-ascending-order">Sort one column in ascending order</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the dataframe by dengue_total in ascending order</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>colombia_sorted <span class="ot">&lt;-</span> colombia_data[<span class="fu">order</span>(colombia_data<span class="sc">$</span>dengue_total), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="sort-one-column-in-descending-order" class="level3">
+<h3 class="anchored" data-anchor-id="sort-one-column-in-descending-order">Sort one column in descending order</h3>
+<p>To sort in descending order, just put a minus <code>-</code> in front of the column inside <code>order()</code> (if it’s numeric):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the dataframe by dengue_total in descending order</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>colombia_sorted_desc <span class="ot">&lt;-</span> colombia_data[<span class="fu">order</span>(<span class="sc">-</span>colombia_data<span class="sc">$</span>dengue_total), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="sort-by-multiple-columns" class="level3">
+<h3 class="anchored" data-anchor-id="sort-by-multiple-columns">Sort by multiple columns</h3>
+<p>You can sort by more than one column by adding them to <code>order()</code> in the order of priority:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by dengue_total (ascending), and then by Year (descending)</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>colombia_sorted_multi <span class="ot">&lt;-</span> colombia_data[<span class="fu">order</span>(colombia_data<span class="sc">$</span>dengue_total, <span class="sc">-</span>colombia_data<span class="sc">$</span>Year), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This means it will first sort by total dengue cases, and when there are ties, it will sort those rows by year from most recent to oldest.</p>
+</section>
+</section>
+<section id="summarising-data" class="level2">
+<h2 class="anchored" data-anchor-id="summarising-data">Summarising Data</h2>
+<p>Creating summaries of your data would be a good way to start describing the variable you are working with. Summary statistics are a good example of how one can summarize data.</p>
+<p>Let’s say we want to look at the average number of dengue cases (<code>dengue_total</code>) in the <code>colombia</code> dataset. We can use the <code>mean()</code> function in base R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average number of dengue cases</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(colombia_data<span class="sc">$</span>dengue_total, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1424.981</code></pre>
+</div>
+</div>
+<p>We use <code>na.rm = TRUE</code> to ignore missing values (<code>NA</code>) when calculating the mean.</p>
+<section id="frequency-counting-values" class="level3">
+<h3 class="anchored" data-anchor-id="frequency-counting-values">Frequency: Counting Values</h3>
+<p>Another common summary task is counting how many times each category appears. For example, we can count how often each type of time resolution (<code>T_res</code>) appears:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of observations for each value of T_res</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(colombia_data<span class="sc">$</span>T_res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Week Year 
+ 835    9 </code></pre>
+</div>
+</div>
+<p>This will return the frequency of each unique value in the <code>T_res</code> column.</p>
+<p>To count combinations of two columns, like <code>T_res</code> and <code>full_name</code> (temporal and spatial resolution):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of observations for each combination of T_res and S_res</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(colombia_data<span class="sc">$</span>T_res, colombia_data<span class="sc">$</span>full_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+       COLOMBIA
+  Week      835
+  Year        9</code></pre>
+</div>
+</div>
+<p>This will show a cross-tabulation of how many rows have each combination of <code>T_res</code> and <code>S_res</code>.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
