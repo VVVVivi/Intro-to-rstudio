@@ -69,7 +69,7 @@ This chapter draws from the following key sources:
 
 The following datasets will be used in the upcoming examples:
 
--   The **gapminder** dataset from the `gapminder` package contains data across different years for dozens of countries, including continent, life expectancy, population, and per capita GDP. It includes 1704 observations and 6 variables.
+-   The `gapminder` dataset from the `gapminder` package contains data across different years for dozens of countries, including continent, life expectancy, population, and per capita GDP. It includes 1704 observations and 6 variables.
 
 -   The `gss_sm` dataset from the `socviz` package includes part of the General Social Survey (GSS) data from the United States in 2016. It has 2867 observations and 32 variables. The variables mainly represent categorical attributes in social surveys, such as binary classification, ordinal classification, grouped numeric values, and integer values.
 
@@ -116,7 +116,7 @@ In the call to `ggplot()`, the `data =`, `mapping =`, `x =`, and `y =` parts can
 p <- ggplot(gapminder, aes(gdpPercap, lifeExp))
 ```
 
-nce the data and aesthetics are defined, you can create the plot by adding a `geom_xxx()` layer to specify the geometry type. Combine this with the result of `ggplot()` using a plus sign (`+`), like:
+Once the data and aesthetics are defined, you can create the plot by adding a `geom_xxx()` layer to specify the geometry type. Combine this with the result of `ggplot()` using a plus sign (`+`), like:
 
 ```{r}
 p + geom_point()

@@ -277,7 +277,7 @@ This is the second edition, which discusses various types of R plots.</p></li>
 <h2 class="anchored" data-anchor-id="datasets-used-in-later-examples">Datasets Used in Later Examples</h2>
 <p>The following datasets will be used in the upcoming examples:</p>
 <ul>
-<li><p>The <strong>gapminder</strong> dataset from the <code>gapminder</code> package contains data across different years for dozens of countries, including continent, life expectancy, population, and per capita GDP. It includes 1704 observations and 6 variables.</p></li>
+<li><p>The <code>gapminder</code> dataset from the <code>gapminder</code> package contains data across different years for dozens of countries, including continent, life expectancy, population, and per capita GDP. It includes 1704 observations and 6 variables.</p></li>
 <li><p>The <code>gss_sm</code> dataset from the <code>socviz</code> package includes part of the General Social Survey (GSS) data from the United States in 2016. It has 2867 observations and 32 variables. The variables mainly represent categorical attributes in social surveys, such as binary classification, ordinal classification, grouped numeric values, and integer values.</p></li>
 <li><p>The <code>midwest</code> dataset from the <code>ggplot2</code> package contains statistical data on counties in the Midwestern United States, such as land area.</p></li>
 </ul>
@@ -374,7 +374,7 @@ This is the second edition, which discusses various types of R plots.</p></li>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(gdpPercap, lifeExp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>nce the data and aesthetics are defined, you can create the plot by adding a <code>geom_xxx()</code> layer to specify the geometry type. Combine this with the result of <code>ggplot()</code> using a plus sign (<code>+</code>), like:</p>
+<p>Once the data and aesthetics are defined, you can create the plot by adding a <code>geom_xxx()</code> layer to specify the geometry type. Combine this with the result of <code>ggplot()</code> using a plus sign (<code>+</code>), like:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
