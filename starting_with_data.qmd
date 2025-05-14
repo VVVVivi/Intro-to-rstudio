@@ -26,7 +26,7 @@ This command won’t display anything on its own because the data is being assig
 View(colombia_data)
 ```
 
-we can alos just look at the first few rows using the `head()` function:
+we can also just look at the first few rows using the `head()` function:
 
 ```{r}
 head(colombia_data)
@@ -136,7 +136,7 @@ You can also leave out (exclude) parts of a data frame using the minus `-` sign:
 #| eval: false
 
 # all columns except the first one
-colombia_data[, -1]  
+colombia_data2 <- colombia_data[, -1]  
 
 # similar to head(colombia), keeps only rows 1 to 6
 colombia_data[-(7:34786), ]     
@@ -150,14 +150,14 @@ Here are a few examples using the `colombia` data:
 
 ```{r}
 # get the "value" column as a vector
-colombia_data[, "dengue_total"]
+dengue_total <- colombia_data[, "dengue_total"]
 
 ```
 
 ```{r}
 #| eval: false
 # this does the same thing
-colombia_data$dengue_total
+dengue_total2 <- colombia_data$dengue_total
 ```
 
 ```{r}

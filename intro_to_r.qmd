@@ -59,7 +59,7 @@ weight_kg <- 55    # doesn't print anything
 weight_kg          # and so does typing the name of the object
 ```
 
-Now that R has`weight_kg` in memory, we can do arithmetic with it. For instance, we may want to convert this weight into pounds (weight in pounds is 2.2 times the weight in kg):
+Now that R has `weight_kg` in memory, we can do arithmetic with it. For instance, we may want to convert this weight into pounds (weight in pounds is 2.2 times the weight in kg):
 
 ```{r}
 2.2 * weight_kg
@@ -69,6 +69,7 @@ We can also change an object’s value by assigning it a new one:
 
 ```{r}
 weight_kg <- 57.5
+weight_kg2 <- 57.5
 2.2 * weight_kg
 ```
 
@@ -166,6 +167,10 @@ If we do name the arguments, we can switch their order:
 round(digits = 2, x = 3.14159)
 ```
 
+```{r}
+round(2, 3.14159)
+```
+
 It’s good practice to put the non-optional arguments (like the number you’re rounding) first in your function call, and to then specify the names of all optional arguments. If you don’t, someone reading your code might have to look up the definition of a function with unfamiliar arguments to understand what you’re doing.
 
 ## **Vectors and data types**
@@ -173,6 +178,10 @@ It’s good practice to put the non-optional arguments (like the number you’re
 A **vector** is the most basic and common data type in R.
 
 A vector contains a sequence of values of the same type (e.g., numbers or characters). You can create one using `c()`.
+
+```{r}
+c <- c()
+```
 
 ```{r}
 weight_g <- c(50, 60, 65, 82)
@@ -251,6 +260,10 @@ For example:
 c(1, 2, 3, "1") # Returns "character"
 ```
 
+```{r}
+as.numeric(c(1, 2, 3, "1"))
+```
+
 If you want to store different types in a single object, you'd typically use a **list** instead:
 
 ```{r}
@@ -295,6 +308,8 @@ animals[2]
 
 ```{r}
 animals[c(3, 2)]
+animals[c(2, 3)]
+animals[c(2:4)]
 ```
 
 We can also repeat the indices to create an object with more elements than the original one:

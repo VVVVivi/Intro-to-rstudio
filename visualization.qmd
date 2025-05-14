@@ -106,6 +106,7 @@ p <- ggplot(data = gapminder,
   mapping = aes(
     x = gdpPercap,
     y = lifeExp))
+p
 ```
 
 The x and y axes are the most common aesthetics, but you can also map variables to color, shape, or line type. At this stage, you don’t need to specify actual colors or symbols — just map the variables to these graphical features.
@@ -344,7 +345,7 @@ To save the most recently generated plot as a PNG file:
 
 ```{r}
 #| eval: false
-ggsave(filename = "filename.png")
+ggsave(filename = "image/filename.png")
 ```
 
 To save as a PDF:
